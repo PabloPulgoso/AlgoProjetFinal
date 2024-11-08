@@ -41,8 +41,7 @@ public class DictionnaireTest
     {
         Stopwatch chrono = new Stopwatch();
 
-        const string path = "C:\\Users\\pablo\\source\\repos\\ProjetFinalAlgo\\Assets\\MotsPossiblesFR.txt";
-        string[] mots = File.ReadAllText(path).Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        string[] mots = File.ReadAllText(Program.pathEN).Split(' ', StringSplitOptions.RemoveEmptyEntries); // Va chercher un dictionnaire de mots
 
         Dictionnaire dico = new Dictionnaire(mots); // Crée un nouveau dictionnaire
         int fin = dico.Length - 1;

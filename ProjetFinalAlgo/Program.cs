@@ -11,6 +11,8 @@ namespace ProjetFinal
 {
     internal class Program
     {
+        public static readonly string pathEN = "C:\\Users\\pablo\\source\\repos\\projetfinal\\ProjetFinalAlgo\\Assets\\MotsPossiblesEN.txt";
+        public static readonly string stpathFR = "C:\\Users\\pablo\\source\\repos\\projetfinal\\ProjetFinalAlgo\\Assets\\MotsPossiblesFR.txt";
 
         /// <summary>
         /// Affiche ligne par ligne le contenu d'un fichier.
@@ -48,10 +50,8 @@ namespace ProjetFinal
 
         static void Main(string[] args)
         {
-            const string pathEN = "C:\\Users\\pablo\\source\\repos\\New folder\\ProjetFinalAlgo\\Assets\\MotsPossiblesEN.txt";
-            const string pathFR = "C:\\Users\\pablo\\source\\repos\\New folder\\ProjetFinalAlgo\\Assets\\MotsPossiblesFR.txt";
-            string[] mots = File.ReadAllText(pathFR).Split(' ', StringSplitOptions.RemoveEmptyEntries);
-
+            Console.WriteLine(pathEN);
+            Console.WriteLine(pathEN);
 
         }
     }
