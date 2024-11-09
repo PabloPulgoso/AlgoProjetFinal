@@ -50,8 +50,10 @@ namespace ProjetFinal
 
         static void Main(string[] args)
         {
-            Console.WriteLine(pathEN);
-            Console.WriteLine(pathEN);
+            string[] mots = File.ReadAllText(Program.pathEN).Split(' ', StringSplitOptions.RemoveEmptyEntries); // Va chercher un dictionnaire de mots
+
+            Dictionnaire d = new Dictionnaire(mots);
+
 
         }
     }

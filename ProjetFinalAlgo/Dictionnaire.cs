@@ -21,7 +21,7 @@ namespace ProjetFinal
         {
             get { return mots; }
         }
-        
+
 
         /// <summary>
         /// Constructeur du dictionnaire.
@@ -50,14 +50,14 @@ namespace ProjetFinal
         {
             if (mots != null)
             {
-                this.mots = mots.Where(m=> m!=null).ToArray();
+                this.mots = mots.Where(m => m != null).ToArray();
             }
             else
             {
                 throw new ArgumentNullException("Le tableau est null");
             }
         }
-        
+
         /// <summary>
         /// Renvoie le nombre de mots du dictionnaire
         /// </summary>
@@ -82,8 +82,12 @@ namespace ProjetFinal
             return true;
         }
 
-
-        public void TriRapide( int debut, int fin)
+        /// <summary>
+        /// Trie le tableau avec l'algorithme de tri rapide.
+        /// </summary>
+        /// <param name="debut">Debut du tri</param>
+        /// <param name="fin">Pivot du tri</param>
+        public void TriRapide(int debut, int fin) // Le string[] est là pour normaliser la signature pour les tests.
         {
             if (debut < fin)
             {
@@ -95,6 +99,42 @@ namespace ProjetFinal
             }
         }
 
+
+        /// <summary>
+        /// Trie le tableau avec l'algorithme du tri à bulle.
+        /// </summary>
+        /// <param name="tab">Tableau à trier</param>
+        public void TriBulle(int debut = 0, int fin = 0) // Les paramètres sont là pour normaliser la signature pour les tests.
+        {
+            int n = this.Length;
+            bool echange;
+
+            for (int i = 0; i < n - 1; i++)
+            {
+                echange = false; 
+                for (int j = 0; j < n - i - 1; j++)
+                {
+                    // Compare et échange deux éléments si c'est nécessaire
+                    if (string.Compare(this.mots[j], this.mots[j + 1]) > 0)
+                    {
+                        Echange(this.mots, j, j + 1);
+                        echange = true;
+                    }
+                }
+
+                // Si on a pas échangé d'éléments on considère que le tri est fini
+                if (!echange)
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Trie une partition du tableau.
+        /// </summary>
+        /// <param name="tab">Tableau à trier</param>
+        /// <param name="debut">Debut du tri.</param>
+        /// <param name="fin">Pivot du tri.</param>
+        /// <returns></returns>
         private int Partition(string[] tab, int debut, int fin)
         {
             string pivot = tab[fin]; // Choisit l'élément le plus à droite comme pivot
@@ -115,6 +155,12 @@ namespace ProjetFinal
             return i + 1;
         }
 
+        /// <summary>
+        /// Echange deux éléments d'un tableau de strings.
+        /// </summary>
+        /// <param name="tab">Tableau avec les éléments à échanger.</param>
+        /// <param name="i">Indice du premier élément à échanger.</param>
+        /// <param name="j">Indice du deuxième élément à échanger.</param>
         private void Echange(string[] tab, int i, int j)
         {
             string temp = tab[i];
