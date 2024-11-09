@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 
 //Je met des commentaires içi pour qu'on écrive les choses à faire
@@ -12,7 +13,8 @@ namespace ProjetFinal
     internal class Program
     {
         public static readonly string pathEN = "C:\\Users\\pablo\\source\\repos\\projetfinal\\ProjetFinalAlgo\\Assets\\MotsPossiblesEN.txt";
-        public static readonly string stpathFR = "C:\\Users\\pablo\\source\\repos\\projetfinal\\ProjetFinalAlgo\\Assets\\MotsPossiblesFR.txt";
+        public static readonly string pathFR = "C:\\Users\\pablo\\source\\repos\\projetfinal\\ProjetFinalAlgo\\Assets\\MotsPossiblesFR.txt";
+
 
         /// <summary>
         /// Affiche ligne par ligne le contenu d'un fichier.
@@ -43,17 +45,44 @@ namespace ProjetFinal
             }
 
         }
-        
-        
 
+        /// <summary>
+        /// Crée un dictionnaire avec la langue que choisira l'utilisateur.
+        /// </summary>
+        /// <returns>Dictionnaire</returns>
+        static Dictionnaire ChoisirLangue()
+        {
+            Console.WriteLine("Choisissez la langue dans laquelle vous voulez jouer (F pour FR ou E pour EN): ");
+
+            ConsoleKey langueTouche = Console.ReadKey().Key;
+
+            string[] mots = File.ReadAllText(langueTouche switch
+                {
+                    ConsoleKey.F => pathFR,
+                    ConsoleKey.E => pathEN
+                }
+            ).Split(' ', StringSplitOptions.RemoveEmptyEntries); // Va chercher un dictionnaire de mots
+
+            Dictionnaire dico = new Dictionnaire(mots, langueTouche switch
+            {
+                ConsoleKey.F => 'F',
+                ConsoleKey.E => 'E'
+            });
+
+
+            Console.Clear();
+
+            return dico;
+        }
 
 
         static void Main(string[] args)
         {
-            string[] mots = File.ReadAllText(Program.pathEN).Split(' ', StringSplitOptions.RemoveEmptyEntries); // Va chercher un dictionnaire de mots
 
-            Dictionnaire d = new Dictionnaire(mots);
+            Dictionnaire dico = ChoisirLangue(); // Choisit la langue du dictionnaire à utiliser pour le reste du jeu
 
+
+            Console.WriteLine($"Vous avez choisis le dictionnaire en {dico.Langue switch{'F' => "Français", 'E' => "Anglais"}}");
 
         }
     }

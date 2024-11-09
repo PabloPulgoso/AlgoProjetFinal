@@ -16,6 +16,7 @@ namespace ProjetFinal
         /// </summary>
         private string[] mots;
 
+        private char langue;
 
 
         // Propriétés publiques
@@ -36,6 +37,10 @@ namespace ProjetFinal
             get { return mots.Length; }
         }
 
+        public char Langue
+        {
+            get { return langue; }
+        }
 
 
 
@@ -47,11 +52,12 @@ namespace ProjetFinal
         /// </summary>
         /// <param name="dico">Prend une chaine de caractères séparés par des espaces.</param>
         /// <exception cref="ArgumentNullException">Renvoie une erreur si la chaine est nulle</exception>
-        public Dictionnaire(string dico)
+        public Dictionnaire(string dico, char langue)
         {
             if (dico != null)
             {
                 this.mots = dico.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                this.langue = langue;
 
             }
             else
@@ -65,11 +71,12 @@ namespace ProjetFinal
         /// </summary>
         /// <param name="mots">Tableau de string où chaque string sera un mot.</param>
         /// <exception cref="ArgumentNullException">Renvoie une erreur si le tableau est null</exception>
-        public Dictionnaire(string[] mots)
+        public Dictionnaire(string[] mots, char langue)
         {
             if (mots != null)
             {
                 this.mots = mots.Where(m => m != null).ToArray();
+                this.langue = langue;
             }
             else
             {

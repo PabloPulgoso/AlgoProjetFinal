@@ -53,7 +53,7 @@ public class DictionnaireTest
 
 
 
-        Dictionnaire dico = new Dictionnaire(mots); // Crée un nouveau dictionnaire
+        Dictionnaire dico = new Dictionnaire(mots, 'T'); // Crée un nouveau dictionnaire
         int fin = dico.Length - 1;
 
         FonctionDeTri fonctionDeTri = methodeDeTri switch // Choisit l'algorithme à chronometrer en fonction des paramètres donnés au test unitaire.
