@@ -8,11 +8,17 @@ namespace ProjetFinal
 {
     internal class Dictionnaire
     {
+
+        // Propriétés privées
+
         /// <summary>
         /// Ensemble de strings qui constituent le dictionnaire.
         /// </summary>
         private string[] mots;
 
+
+
+        // Propriétés publiques
 
         /// <summary>
         /// Ensemble de strings qui constituent le dictionnaire.
@@ -22,6 +28,19 @@ namespace ProjetFinal
             get { return mots; }
         }
 
+        /// <summary>
+        /// Renvoie le nombre de mots du dictionnaire
+        /// </summary>
+        public int Length
+        {
+            get { return mots.Length; }
+        }
+
+
+
+
+
+        // Constructeurs
 
         /// <summary>
         /// Constructeur du dictionnaire.
@@ -58,13 +77,7 @@ namespace ProjetFinal
             }
         }
 
-        /// <summary>
-        /// Renvoie le nombre de mots du dictionnaire
-        /// </summary>
-        public int Length
-        {
-            get { return mots.Length; }
-        }
+
 
         /// <summary>
         /// Verifie si le tableau est trié.
@@ -82,6 +95,15 @@ namespace ProjetFinal
             return true;
         }
 
+
+
+
+
+
+
+
+        // Methodes de tri
+
         /// <summary>
         /// Trie le tableau avec l'algorithme de tri rapide.
         /// </summary>
@@ -98,7 +120,6 @@ namespace ProjetFinal
                 this.TriRapide(indexPivot + 1, fin);
             }
         }
-
 
         /// <summary>
         /// Trie le tableau avec l'algorithme du tri à bulle.
@@ -125,6 +146,94 @@ namespace ProjetFinal
                 // Si on a pas échangé d'éléments on considère que le tri est fini
                 if (!echange)
                     break;
+            }
+        }
+
+        /// <summary>
+        /// Trie le tableau avec l'algorithme de trie par fusion.
+        /// </summary>
+        /// <param name="gauche">Début du tableau à trier</param>
+        /// <param name="droite">Fin du tableau à trier</param>
+        public void TriFusion(int gauche, int droite)
+        {
+            if (gauche < droite)
+            {
+                int millieu = (gauche + droite) / 2;
+
+                // Trie la première moitié
+                this.TriFusion( gauche, millieu);
+                // Trie la deuxième moitié
+                this.TriFusion( millieu + 1, droite);
+                
+                // Fusiononne les deux moitiés.
+                Fusion(this.mots, gauche, millieu, droite);
+            }
+        }
+
+
+
+        // Méthodes outils pour les algorithmes de tri
+
+        /// <summary>
+        /// Trie les sous-tableaux
+        /// </summary>
+        /// <param name="tab">Tableau à trier</param>
+        /// <param name="gauche">Début du premier sous-tableau</param>
+        /// <param name="millieu">Fin du premier sous-tableau et début du deuxième</param>
+        /// <param name="droite">Fin du deuxième sous-tableau</param>
+        private void Fusion(string[] tab, int gauche, int millieu, int droite)
+        {
+            // Calcule la taille des deux tableaux à fusionner.
+            int n1 = millieu - gauche + 1;
+            int n2 = droite - millieu;
+            
+
+            // crée des tableaux temporaires
+            string[] tabGauche = new string[n1];
+            string[] tabDroite = new string[n2];
+
+            // Copie les données vers les tableaux temporaires
+            for (int i = 0; i < n1; i++)
+                tabGauche[i] = tab[gauche + i];
+            for (int j = 0; j < n2; j++)
+                tabDroite[j] = tab[millieu + 1 + j];
+
+            // Fusion des tableaux temporaires
+
+            // Index initiaux des deux sous-tableaux
+            int k = gauche;
+            int indexI = 0;
+            int indexJ = 0;
+
+            while (indexI < n1 && indexJ < n2)
+            {
+                if (string.Compare(tabGauche[indexI], tabDroite[indexJ]) <= 0)
+                {
+                    tab[k] = tabGauche[indexI];
+                    indexI++;
+                }
+                else
+                {
+                    tab[k] = tabDroite[indexJ];
+                    indexJ++;
+                }
+                k++;
+            }
+
+            // Copie les éléments restants dans tabGauche
+            while (indexI < n1)
+            {
+                tab[k] = tabGauche[indexI];
+                indexI++;
+                k++;
+            }
+
+            // Copie les éléments restants dans tabDroite
+            while (indexJ < n2)
+            {
+                tab[k] = tabDroite[indexJ];
+                indexJ++;
+                k++;
             }
         }
 

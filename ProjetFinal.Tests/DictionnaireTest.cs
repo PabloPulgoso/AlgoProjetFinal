@@ -31,6 +31,11 @@ public class DictionnaireTest
         Assert.AreEqual(attendu, resultat); // S'assure que le dictionnaire soit trié
     }
 
+
+
+
+
+
     /// <summary>
     /// Teste la vitesse de plusieurs algorithmes de tri.
     /// </summary>
@@ -38,7 +43,7 @@ public class DictionnaireTest
     [TestMethod]
     [DataRow("TriRapide")]
     [DataRow("TriBulle")]
-    //[DataRow("TriFusion")]
+    [DataRow("TriFusion")]
     public void ChronometrerTri(string methodeDeTri)
     {
         Stopwatch chrono = new Stopwatch(); 
@@ -55,7 +60,7 @@ public class DictionnaireTest
         {
             "TriRapide" => dico.TriRapide,
             "TriBulle" => dico.TriBulle,
-            //"TriFusion" => dico.TriFusion,
+            "TriFusion" => dico.TriFusion,
         };
 
 
