@@ -24,7 +24,7 @@ public class DictionnaireTest
     [TestMethod]
     public void VerifierTri()
     {
-        Dictionnaire dico = new Dictionnaire("chat arbre lune vélo maison montagne fleur soleil livre clavier musique pomme gâteau vélo ciel ordinateur nuage");
+        Dictionnaire dico = new Dictionnaire("chat arbre lune vélo maison montagne fleur soleil livre clavier musique pomme gâteau vélo ciel ordinateur nuage",'T');
         bool attendu = false;
         bool resultat = dico.IsSorted();
 
