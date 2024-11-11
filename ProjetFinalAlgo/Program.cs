@@ -76,13 +76,53 @@ namespace ProjetFinal
         }
 
 
+        static Lettre[] CreerLettres()
+        {
+            List<Lettre> lettres = new List<Lettre>();   
+
+            using (StreamReader reader =
+                   new StreamReader(
+                       "C:\\Users\\pablo\\source\\repos\\projetfinal\\ProjetFinalAlgo\\Assets\\Lettres.txt"))
+            {
+
+                string line;
+
+                while ((line = reader.ReadLine()) != null) // Affiche toutes les lignes.
+                {
+                    string[] infos = line.Split(';');
+
+                    lettres.Add(new Lettre(char.Parse(infos[0]), int.Parse(infos[2]), int.Parse(infos[1])));
+                }
+            }
+
+            return lettres.ToArray();
+        }
+
+
+
         static void Main(string[] args)
         {
 
-            Dictionnaire dico = ChoisirLangue(); // Choisit la langue du dictionnaire à utiliser pour le reste du jeu
+            Lettre[] lettres = CreerLettres();
+
+            int s = 0;
+            foreach (Lettre l in lettres)
+            {
+                Console.WriteLine($"{l.Id} : {l.Quantite}");
+                s += l.Quantite;
+            }
+
+            Console.WriteLine(s/6);
+            De d = new De(lettres);
 
 
-            Console.WriteLine($"Vous avez choisis le dictionnaire en {dico.Langue switch{'F' => "Français", 'E' => "Anglais"}}");
+
+
+            //Dictionnaire dico = ChoisirLangue(); // Choisit la langue du dictionnaire à utiliser pour le reste du jeu
+
+            //Console.WriteLine($"Vous avez choisis le dictionnaire en {dico.Langue switch{'F' => "Français", 'E' => "Anglais"}}");
+
+
 
         }
     }

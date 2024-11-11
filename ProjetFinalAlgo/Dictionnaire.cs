@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +18,8 @@ namespace ProjetFinal
         private string[] mots;
 
         private char langue;
+
+
 
 
         // Propriétés publiques
@@ -103,6 +106,60 @@ namespace ProjetFinal
         }
 
 
+        /// <summary>
+        /// Retourne une chaine de caractères décrivant le dictionnaire. (Langue, nombre de mots par longueur et nombre de mots par la première lettre)
+        /// </summary>
+        /// <returns>String</returns>
+        public string toString()
+        {
+            Dictionary<int, int> longueurs = new Dictionary<int, int>(); // Création d'un dictionnaire pour compter le nombre de mots par longueur
+            Dictionary<char, int> pLettre = new Dictionary<char, int>(); // Création d'un dictionnaire pour compter le nombre de mots par premiere lettre
+
+            string des = $"Langue du dictionnaire: {this.langue switch {    // Création d'un string pour stocker les informations
+                'F' => "Français",
+                'E' => "Anglais"
+            }} \n\n";
+
+            foreach (string s in this.mots) // Parcours la liste de mots pour remplir les dictionnaires
+            {
+
+                if (pLettre.ContainsKey((s[0]))) // Vérifie l'existance d'une clef
+                {
+                    pLettre[s[0]]++; // Si elle existe on ajoute une ocurrence
+                }
+                else
+                {
+                    pLettre.Add(s[0],1); // Sinon on la crée
+                }
+
+
+                if (longueurs.ContainsKey(s.Length)) // Pareil
+                {
+                    longueurs[s.Length]++;
+                }
+                else
+                {
+                    longueurs.Add(s.Length,1);
+                }
+
+            }
+
+            des += "Nombre de mots par longueur:\n";
+
+            foreach (var l in longueurs)
+            {
+                des += $"Il y a {l.Value} mots de longueur {l.Key}\n"; // Ajoute une ligne pour chaque longueur de mots
+            }
+
+            des += "\n\nNombre de mots par la première lettre:\n";
+
+            foreach (var l in pLettre)
+            {
+                des += $"Il y a {l.Value} mots qui commencent par {l.Key}\n"; // Pareil mais pour la première lettre
+            }
+
+            return des;
+        }
 
 
 
