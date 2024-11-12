@@ -116,7 +116,7 @@ namespace ProjetFinal
             De d = new De(lettres);
 
 
-
+            // Romain est un beau gosse de qualité
 
             //Dictionnaire dico = ChoisirLangue(); // Choisit la langue du dictionnaire à utiliser pour le reste du jeu
 
