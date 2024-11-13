@@ -245,7 +245,7 @@ namespace ProjetFinal
         /// <param name="gauche">Début du premier sous-tableau</param>
         /// <param name="millieu">Fin du premier sous-tableau et début du deuxième</param>
         /// <param name="droite">Fin du deuxième sous-tableau</param>
-        privat  e void Fusion(string[] tab, int gauche, int millieu, int droite)
+        private void Fusion(string[] tab, int gauche, int millieu, int droite)
         {
             // Calcule la taille des deux tableaux à fusionner.
             int n1 = millieu - gauche + 1;

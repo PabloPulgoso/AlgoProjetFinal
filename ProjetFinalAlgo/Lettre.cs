@@ -60,6 +60,8 @@ namespace ProjetFinal
         /// <param name="lettres">Contient la lettre, sa quantité et son poids</param>
         /// <returns>Un tableau comprenant 100 lettres</returns>
         public Lettre[] Ponderation(Lettre[] lettres )
+
+        public static Lettre[] Ponderation(Lettre[] lettres )
         {
             //créer un tableau sur 100
             Lettre[] tableauLettres = new Lettre[100]; 

@@ -14,7 +14,7 @@ namespace ProjetFinal
     {
         public static readonly string pathEN = $"{GetParentLoop(AppDomain.CurrentDomain.BaseDirectory,5)}\\ProjetFinalAlgo\\Assets\\MotsPossiblesEN.txt";
         public static readonly string pathFR = $"{GetParentLoop(AppDomain.CurrentDomain.BaseDirectory, 5)}\\ProjetFinalAlgo\\Assets\\MotsPossiblesFR.txt";
-
+        public static readonly string pathLettre = $"{GetParentLoop(AppDomain.CurrentDomain.BaseDirectory, 5)}\\ProjetFinalAlgo\\Assets\\Lettres.txt";
 
 
         public static string GetParentLoop(string Path, int number)
@@ -88,15 +88,12 @@ namespace ProjetFinal
         }
 
 
-        static Lettre[] CreerLettres()
+        public static Lettre[] CreerLettres()
         {
             List<Lettre> lettres = new List<Lettre>();   
 
-            using (StreamReader reader =
-                   new StreamReader(
-                       "C:\\Users\\pablo\\source\\repos\\projetfinal\\ProjetFinalAlgo\\Assets\\Lettres.txt"))
+            using (StreamReader reader = new StreamReader(pathLettre))
             {
-
                 string line;
 
                 while ((line = reader.ReadLine()) != null) // Affiche toutes les lignes.
@@ -116,13 +113,12 @@ namespace ProjetFinal
         {
 
 
-            Console.WriteLine(s / 6);
-            De d = new De(lettres);
+
+
 
             Dictionnaire dico = ChoisirLangue(); // Choisit la langue du dictionnaire à utiliser pour le reste du jeu
             dico.TriRapide(0, dico.Length - 1);
 
-            Dictionnaire dico = ChoisirLangue(); // Choisit la langue du dictionnaire à utiliser pour le reste du jeu
 
             //Console.WriteLine($"Vous avez choisis le dictionnaire en {dico.Langue switch{'F' => "Français", 'E' => "Anglais"}}");
 
