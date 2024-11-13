@@ -48,6 +48,12 @@ namespace ProjetFinal
 
         }
 
+        public Lettre LanceDe()
+        {
+            return faces[random.Next(0, 6)];
+
+        }
+
 
 
 
