@@ -49,7 +49,10 @@ public class DictionnaireTest
         Stopwatch chrono = new Stopwatch(); 
         
         // Va chercher un dictionnaire de mots à taille réduite (550 mots) pour tester rapidement les vitesses des algorithmes de tri.
-        string[] mots = File.ReadAllText("C:\\Users\\pablo\\source\\repos\\projetfinal\\ProjetFinalAlgo\\Assets\\MotsTests.txt").Split(' ', StringSplitOptions.RemoveEmptyEntries); // Va chercher un dictionnaire de mots
+
+        string loc = $"{Program.GetParentLoop(AppDomain.CurrentDomain.BaseDirectory, 5)}\\\\ProjetFinalAlgo\\\\Assets\\\\MotsTests.txt";
+
+        string[] mots = File.ReadAllText(loc).Split(' ', StringSplitOptions.RemoveEmptyEntries); // Va chercher un dictionnaire de mots
 
 
 

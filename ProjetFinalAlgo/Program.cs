@@ -20,7 +20,7 @@ namespace ProjetFinal
         public static readonly string pathFR = $"{GetParentLoop(loc, 5)}\\ProjetFinalAlgo\\Assets\\MotsPossiblesFR.txt";
 
 
-        static string GetParentLoop(string Path, int number)
+        public static string GetParentLoop(string Path, int number)
         {
             string result = Path;
             for (int i = 0; i < number; i++)
