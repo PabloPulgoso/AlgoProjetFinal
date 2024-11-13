@@ -68,7 +68,7 @@ namespace ProjetFinal
             int compteur = 0;
 
             //boucle parcourant le tableau en paramètre
-            for(int i=0; i<tableauLettres.Length; i++)
+            for(int i=0; i<lettres.Length; i++)
             {
                 //boucle pour parcourir le tableauLettres
                 for(int j = 0; j < lettres[i].quantite; j++)
