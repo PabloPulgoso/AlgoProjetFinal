@@ -44,8 +44,13 @@ namespace ProjetFinal
             this.quantite= l.quantite;
         }
 
-
-        public Lettre[] CreerPossibilitesLettres(Lettre[] frequences, int tailleTab)
+        /// <summary>
+        /// Fait un tableau rempli de lettres en fonction de la taille du plateau
+        /// </summary>
+        /// <param name="frequences">Tableau de lettres qui a le nombre de lettres ajusté à leur fréquence</param>
+        /// <param name="tailleTab">taille d'un côté du plateau de jeu</param>
+        /// <returns></returns>
+        public static Lettre[] CreerPossibilitesLettres(Lettre[] frequences, int tailleTab)
         {
             Lettre[] dispo = new Lettre[(tailleTab * tailleTab)*6];
 

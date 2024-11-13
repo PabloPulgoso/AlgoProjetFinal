@@ -41,14 +41,9 @@ public class DictionnaireTest
 
         Lettre[] centLettres = Lettre.Ponderation(l);
 
+        Lettre[] t = Lettre.CreerPossibilitesLettres(centLettres, 5);
 
-        foreach (Lettre lettre in centLettres)
-        {
-
-            Console.WriteLine($"{lettre.Id}: {lettre.Quantite} {lettre.Poids}");
-
-        }
-        Console.WriteLine(centLettres.Length);
+        Console.WriteLine(t.Length);
 
         Assert.IsTrue(centLettres.Length == 100);
     }

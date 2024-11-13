@@ -28,21 +28,21 @@ namespace ProjetFinal
         }
 
         
-        public De(Lettre[] choix)
+        public De(List<Lettre> choix)
         {
             this.faces = new Lettre[6]; 
 
             for (int i = 0; i < 6; i++)
             {
-                int n = random.Next(0, 26);
+                int n = random.Next(0, choix.Count);
 
                 while (choix[n].Quantite <= 0)
                 {
-                    n = random.Next(0, 26);
+                    n = random.Next(0, choix.Count);
                 }
 
                 this.faces[i] = choix[n];
-                choix[n].Quantite--;
+                choix.RemoveAt(n);
 
             }
 
