@@ -12,24 +12,10 @@ namespace ProjetFinal
 {
     internal class Program
     {
-        public static readonly string loc = AppDomain.CurrentDomain.BaseDirectory;
+        public static readonly string pathEN = "C:\\Users\\pablo\\source\\repos\\projetfinal\\ProjetFinalAlgo\\Assets\\MotsPossiblesEN.txt";
+        public static readonly string pathFR = "C:\\Users\\pablo\\source\\repos\\projetfinal\\ProjetFinalAlgo\\Assets\\MotsPossiblesFR.txt";
 
-
-
-        public static readonly string pathEN = $"{GetParentLoop(loc, 5)}\\ProjetFinalAlgo\\Assets\\MotsPossiblesEN.txt";
-        public static readonly string pathFR = $"{GetParentLoop(loc, 5)}\\ProjetFinalAlgo\\Assets\\MotsPossiblesFR.txt";
-
-
-        public static string GetParentLoop(string Path, int number)
-        {
-            string result = Path;
-            for (int i = 0; i < number; i++)
-            {
-                result = Directory.GetParent(result).FullName;
-            }
-            return result;
-        }
-
+        
 
         /// <summary>
         /// Affiche ligne par ligne le contenu d'un fichier.
@@ -93,11 +79,11 @@ namespace ProjetFinal
 
         static Lettre[] CreerLettres()
         {
-            List<Lettre> lettres = new List<Lettre>();
+            List<Lettre> lettres = new List<Lettre>();   
 
-            string fichierLettres = $"{GetParentLoop(loc, 5)}\\ProjetFinalAlgo\\Assets\\Lettres.txt";
-
-            using (StreamReader reader = new StreamReader(fichierLettres))
+            using (StreamReader reader =
+                   new StreamReader(
+                       "C:\\Users\\pablo\\source\\repos\\projetfinal\\ProjetFinalAlgo\\Assets\\Lettres.txt"))
             {
 
                 string line;
@@ -127,14 +113,14 @@ namespace ProjetFinal
                 s += l.Quantite;
             }
 
-            Console.WriteLine(s / 6);
+            Console.WriteLine(s/6);
             De d = new De(lettres);
 
 
 
-            Dictionnaire dico = ChoisirLangue(); // Choisit la langue du dictionnaire à utiliser pour le reste du jeu
+            //Dictionnaire dico = ChoisirLangue(); // Choisit la langue du dictionnaire à utiliser pour le reste du jeu
 
-            Console.WriteLine($"Vous avez choisis le dictionnaire en {dico.Langue switch { 'F' => "Français", 'E' => "Anglais" }}");
+            //Console.WriteLine($"Vous avez choisis le dictionnaire en {dico.Langue switch{'F' => "Français", 'E' => "Anglais"}}");
 
 
 
