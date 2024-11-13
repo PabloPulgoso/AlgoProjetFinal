@@ -45,7 +45,7 @@ namespace ProjetFinal
         }
 
 
-        public Lettre[] CreerPossibilitesLettres(Lettre[] frequences, int tailleTab)
+        public static Lettre[] CreerPossibilitesLettres(Lettre[] frequences, int tailleTab)
         {
             Lettre[] dispo = new Lettre[(tailleTab * tailleTab)*6];
 
