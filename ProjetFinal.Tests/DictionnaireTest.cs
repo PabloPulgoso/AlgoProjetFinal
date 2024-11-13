@@ -38,6 +38,7 @@ public class DictionnaireTest
     {
         Lettre[] l = Program.CreerLettres();
 
+
         Lettre[] centLettres = Lettre.Ponderation(l);
 
 
@@ -47,6 +48,7 @@ public class DictionnaireTest
             Console.WriteLine($"{lettre.Id}: {lettre.Quantite} {lettre.Poids}");
 
         }
+        Console.WriteLine(centLettres.Length);
 
         Assert.IsTrue(centLettres.Length == 100);
     }
