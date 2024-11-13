@@ -72,8 +72,6 @@ namespace ProjetFinal
         /// </summary>
         /// <param name="lettres">Contient la lettre, sa quantité et son poids</param>
         /// <returns>Un tableau comprenant 100 lettres</returns>
-
-
         public static Lettre[] Ponderation(Lettre[] lettres )
         {
             //créer un tableau sur 100
@@ -98,6 +96,11 @@ namespace ProjetFinal
 
         }
 
+        /// <summary>
+        /// Renvoie un tableau avec les lettres disponibles dans le jeu, ajusté à la taille du plateau.
+        /// </summary>
+        /// <param name="taille">Taille du plateau</param>
+        /// <returns>Tableau de Lettre</returns>
         public static Lettre[] CreerLettresDisponibles(int taille)
         {
             Lettre[] l = Program.CreerLettres();
