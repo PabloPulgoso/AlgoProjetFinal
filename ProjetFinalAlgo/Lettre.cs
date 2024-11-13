@@ -59,7 +59,7 @@ namespace ProjetFinal
         /// </summary>
         /// <param name="lettres">Contient la lettre, sa quantité et son poids</param>
         /// <returns>Un tableau comprenant 100 lettres</returns>
-        public Lettre[] Ponderation(Lettre[] lettres )
+
 
         public static Lettre[] Ponderation(Lettre[] lettres )
         {
@@ -72,7 +72,7 @@ namespace ProjetFinal
             //boucle parcourant le tableau en paramètre
             for(int i=0; i<lettres.Length; i++)
             {
-                //boucle pour parcourir le tableauLettres
+                //boucle en fonction du nombre de lettre dont nous avons besoin
                 for(int j = 0; j < lettres[i].quantite; j++)
                 {
                     
