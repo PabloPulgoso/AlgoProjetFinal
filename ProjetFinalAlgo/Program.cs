@@ -104,21 +104,14 @@ namespace ProjetFinal
         static void Main(string[] args)
         {
 
-            Lettre[] lettres = CreerLettres();
 
-            int s = 0;
-            foreach (Lettre l in lettres)
-            {
-                Console.WriteLine($"{l.Id} : {l.Quantite}");
-                s += l.Quantite;
-            }
-
-            Console.WriteLine(s/6);
+            Console.WriteLine(s / 6);
             De d = new De(lettres);
 
+            Dictionnaire dico = ChoisirLangue(); // Choisit la langue du dictionnaire à utiliser pour le reste du jeu
+            dico.TriRapide(0, dico.Length - 1);
 
-
-            //Dictionnaire dico = ChoisirLangue(); // Choisit la langue du dictionnaire à utiliser pour le reste du jeu
+            Dictionnaire dico = ChoisirLangue(); // Choisit la langue du dictionnaire à utiliser pour le reste du jeu
 
             //Console.WriteLine($"Vous avez choisis le dictionnaire en {dico.Langue switch{'F' => "Français", 'E' => "Anglais"}}");
 

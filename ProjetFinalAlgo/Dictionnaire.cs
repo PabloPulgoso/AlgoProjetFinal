@@ -225,9 +225,9 @@ namespace ProjetFinal
                 int millieu = (gauche + droite) / 2;
 
                 // Trie la première moitié
-                this.TriFusion( gauche, millieu);
+                TriFusion( gauche, millieu);
                 // Trie la deuxième moitié
-                this.TriFusion( millieu + 1, droite);
+                TriFusion( millieu + 1, droite);
                 
                 // Fusiononne les deux moitiés.
                 Fusion(this.mots, gauche, millieu, droite);
@@ -245,7 +245,7 @@ namespace ProjetFinal
         /// <param name="gauche">Début du premier sous-tableau</param>
         /// <param name="millieu">Fin du premier sous-tableau et début du deuxième</param>
         /// <param name="droite">Fin du deuxième sous-tableau</param>
-        private void Fusion(string[] tab, int gauche, int millieu, int droite)
+        privat  e void Fusion(string[] tab, int gauche, int millieu, int droite)
         {
             // Calcule la taille des deux tableaux à fusionner.
             int n1 = millieu - gauche + 1;

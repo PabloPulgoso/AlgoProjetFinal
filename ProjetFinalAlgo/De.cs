@@ -35,6 +35,7 @@ namespace ProjetFinal
             for (int i = 0; i < 6; i++)
             {
                 int n = random.Next(0, 26);
+
                 while (choix[n].Quantite <= 0)
                 {
                     n = random.Next(0, 26);
