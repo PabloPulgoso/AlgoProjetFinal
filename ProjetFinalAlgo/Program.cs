@@ -12,10 +12,21 @@ namespace ProjetFinal
 {
     internal class Program
     {
-        public static readonly string pathEN = "C:\\Users\\pablo\\source\\repos\\projetfinal\\ProjetFinalAlgo\\Assets\\MotsPossiblesEN.txt";
-        public static readonly string pathFR = "C:\\Users\\pablo\\source\\repos\\projetfinal\\ProjetFinalAlgo\\Assets\\MotsPossiblesFR.txt";
+        public static readonly string pathEN = $"{GetParentLoop(AppDomain.CurrentDomain.BaseDirectory,5)}\\ProjetFinalAlgo\\Assets\\MotsPossiblesEN.txt";
+        public static readonly string pathFR = $"{GetParentLoop(AppDomain.CurrentDomain.BaseDirectory, 5)}\\ProjetFinalAlgo\\Assets\\MotsPossiblesFR.txt";
 
-        
+
+
+        public static string GetParentLoop(string Path, int number)
+        {
+            string result = Path;
+            for (int i = 0; i < number; i++)
+            {
+                result = Directory.GetParent(result).FullName;
+            }
+            return result;
+        }
+
 
         /// <summary>
         /// Affiche ligne par ligne le contenu d'un fichier.
