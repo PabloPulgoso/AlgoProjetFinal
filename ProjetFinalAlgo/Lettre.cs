@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,6 +36,24 @@ namespace ProjetFinal
             this.poids = poids;
 
         }
+
+        public Lettre[] CreerPossibilitesLettres(Lettre[] frequences, int tailleTab)
+        {
+            Lettre[] dispo = new Lettre[(tailleTab * tailleTab)*6];
+
+            Random random = new Random();
+
+            for (int i = 0; i<dispo.Length; i++)
+            {
+
+                dispo[i] = frequences[random.Next(100)];
+
+            }
+
+            return dispo;
+
+        }
+        
 
 
     }
