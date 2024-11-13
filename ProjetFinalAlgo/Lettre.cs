@@ -37,6 +37,14 @@ namespace ProjetFinal
 
         }
 
+        public Lettre(Lettre l)
+        {
+            this.poids = l.poids;
+            this.id = l.id;
+            this.quantite= l.quantite;
+        }
+
+
         public Lettre[] CreerPossibilitesLettres(Lettre[] frequences, int tailleTab)
         {
             Lettre[] dispo = new Lettre[(tailleTab * tailleTab)*6];
@@ -76,7 +84,7 @@ namespace ProjetFinal
                 for(int j = 0; j < lettres[i].quantite; j++)
                 {
                     
-                    tableauLettres[compteur] = lettres[i];
+                    tableauLettres[compteur] = new Lettre(lettres[i]);
                     tableauLettres[compteur].quantite = 1;
                     compteur++;
                 }
