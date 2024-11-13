@@ -32,7 +32,24 @@ public class DictionnaireTest
     }
 
 
+    [TestMethod]
 
+    public void VerifierLettres()
+    {
+        Lettre[] l = Program.CreerLettres();
+
+        Lettre[] centLettres = Lettre.Ponderation(l);
+
+
+        foreach (Lettre lettre in centLettres)
+        {
+
+            Console.WriteLine($"{lettre.Id}: {lettre.Quantite} {lettre.Poids}");
+
+        }
+
+        Assert.IsTrue(centLettres.Length == 100);
+    }
 
 
 

@@ -55,7 +55,7 @@ namespace ProjetFinal
         }
         
 
-        public Lettre[] Ponderation(Lettre[] lettres )
+        public static Lettre[] Ponderation(Lettre[] lettres )
         {
             Lettre[] tableauLettres = new Lettre[100];
             int compteur = 0;
