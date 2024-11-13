@@ -36,6 +36,23 @@ namespace ProjetFinal
 
         }
 
+        public Lettre[] Ponderation(Lettre[] lettres )
+        {
+            Lettre[] tableauLettres = new Lettre[100];
+            int compteur = 0;
+            for(int i=0; i<tableauLettres.Length; i++)
+            {
+                for(int j = 0; j < lettres[i].quantite; j++)
+                {
+                    tableauLettres[compteur] = lettres[i];
+                    tableauLettres[compteur].quantite = 1;
+                    compteur++;
+                }
+            }
+            return tableauLettres;
+
+        }
+
 
     }
 }
