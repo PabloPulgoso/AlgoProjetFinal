@@ -109,9 +109,18 @@ namespace ProjetFinal
 
 
 
+        public static Lettre[] CreerLettresDisponibles(int taille)
+        {
+            Lettre[] l = Program.CreerLettres();
+            Lettre[] centLettres = Lettre.Ponderation(l);
+            Lettre[] t = Lettre.CreerPossibilitesLettres(centLettres, taille);
+
+            return t;
+        }
+
+
         static void Main(string[] args)
         {
-
 
 
 
@@ -120,8 +129,42 @@ namespace ProjetFinal
             dico.TriRapide(0, dico.Length - 1);
 
 
-            //Console.WriteLine($"Vous avez choisis le dictionnaire en {dico.Langue switch{'F' => "Français", 'E' => "Anglais"}}");
+            Console.WriteLine($"Vous avez choisis le dictionnaire en {dico.Langue switch{'F' => "Français", 'E' => "Anglais"}}");
 
+            Console.WriteLine("Veuillez saisir la taille du plateau (minimum 4)");
+
+            int taille = 0;
+
+
+            while (taille < 4)
+            {
+                try
+                {
+                    taille = int.Parse(Console.ReadLine());
+                }
+                catch {
+                    taille = 0;
+                }
+
+            }
+
+            Console.WriteLine($"Taille {taille}");
+
+            De[] des = new De[taille*taille];
+
+            List<Lettre> lettresDispo = new List<Lettre> (CreerLettresDisponibles(taille));
+
+
+
+            for (int i  = 0; i < des.Length; i++)
+            {
+                des[i] = new De(lettresDispo);
+            }
+            
+            foreach (Lettre l in lettresDispo)
+            {
+                Console.WriteLine($"{l.Id}: {l.Quantite}");
+            }
 
 
         }
