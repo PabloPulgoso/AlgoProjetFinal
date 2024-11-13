@@ -117,6 +117,8 @@ namespace ProjetFinal
 
 
 
+            // Test
+
             //Dictionnaire dico = ChoisirLangue(); // Choisit la langue du dictionnaire à utiliser pour le reste du jeu
 
             //Console.WriteLine($"Vous avez choisis le dictionnaire en {dico.Langue switch{'F' => "Français", 'E' => "Anglais"}}");
