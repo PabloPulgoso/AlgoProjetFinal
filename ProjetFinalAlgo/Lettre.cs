@@ -55,10 +55,10 @@ namespace ProjetFinal
         }
         
         /// <summary>
-        /// 
+        /// Créer un tableau contenant une lettre un certain nombre de fois en fonction de sa quantité
         /// </summary>
-        /// <param name="lettres">contient la lettre, sa quantité et son poids</param>
-        /// <returns></returns>
+        /// <param name="lettres">Contient la lettre, sa quantité et son poids</param>
+        /// <returns>Un tableau comprenant 100 lettres</returns>
         public Lettre[] Ponderation(Lettre[] lettres )
         {
             //créer un tableau sur 100
