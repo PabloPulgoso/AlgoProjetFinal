@@ -198,7 +198,7 @@ namespace ProjetFinal
 
             Console.Clear();
             Console.WriteLine("Combien de tours voulez vous jouer par joueur? Attention, chaque tour dure 1 minute. (Minimum 1 tour)");
-            int nbTours = SaisieInt(1)*nbJoueurs;
+            int nbTours = SaisieInt(1);
 
             var MeilleurMot = new Tuple<string, int, Joueur>("", 0, joueurs[0]);
 
