@@ -17,16 +17,49 @@ namespace ProjetFinal
         }
 
 
-        public Plateau(De[,] tab)
+        public Plateau(int taille)
         {
-            if ( tab.GetLength(0)!= tab.GetLength(1))
+
+            this.tab = new De[taille, taille];
+            this.taille = taille;
+
+            List<Lettre> lettresDispo = new List<Lettre>(Lettre.CreerLettresDisponibles(taille));
+
+            for (int i = 0; i < taille; i++)
             {
-                throw new ArgumentException("Le plateu n'est pas carré.");
+                for (int j = 0; j < taille; j++)
+                {
+                    tab[i, j] = new De(lettresDispo);
+                }
             }
-            this.taille  = tab.GetLength(0);
-            this.tab = tab;
+
         }
 
+        public string toString()
+        {
+            string s = "";
 
+            for (int i = 0;i < taille; i++)
+            {
+                for(int j = 0;j < taille; j++)
+                {
+                    s += $"{tab[i,j].FaceVisible.Id} ";
+                }
+
+                s += "\n";
+            }
+            return s;
+        }
+
+        public void Melanger()
+        {
+            for (int i= 0; i < taille; i++)
+            {
+                for (int j= 0; j < taille; j++)
+                {
+                    tab[i, j].LanceDe();
+                }
+            }
+        }
     }
 }

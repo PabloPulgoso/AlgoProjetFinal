@@ -12,8 +12,20 @@ namespace ProjetFinal
 {
     internal class Program
     {
-        public static readonly string pathEN = "C:\\Users\\pablo\\source\\repos\\projetfinal\\ProjetFinalAlgo\\Assets\\MotsPossiblesEN.txt";
-        public static readonly string pathFR = "C:\\Users\\pablo\\source\\repos\\projetfinal\\ProjetFinalAlgo\\Assets\\MotsPossiblesFR.txt";
+        public static readonly string pathEN = $"{GetParentLoop(AppDomain.CurrentDomain.BaseDirectory,5)}\\ProjetFinalAlgo\\Assets\\MotsPossiblesEN.txt";
+        public static readonly string pathFR = $"{GetParentLoop(AppDomain.CurrentDomain.BaseDirectory, 5)}\\ProjetFinalAlgo\\Assets\\MotsPossiblesFR.txt";
+        public static readonly string pathLettre = $"{GetParentLoop(AppDomain.CurrentDomain.BaseDirectory, 5)}\\ProjetFinalAlgo\\Assets\\Lettres.txt";
+
+
+        public static string GetParentLoop(string Path, int number)
+        {
+            string result = Path;
+            for (int i = 0; i < number; i++)
+            {
+                result = Directory.GetParent(result).FullName;
+            }
+            return result;
+        }
 
 
         /// <summary>
@@ -76,15 +88,12 @@ namespace ProjetFinal
         }
 
 
-        static Lettre[] CreerLettres(int taille)
+        public static Lettre[] CreerLettres()
         {
             List<Lettre> lettres = new List<Lettre>();   
 
-            using (StreamReader reader =
-                   new StreamReader(
-                       "C:\\Users\\pablo\\source\\repos\\projetfinal\\ProjetFinalAlgo\\Assets\\Lettres.txt"))
+            using (StreamReader reader = new StreamReader(pathLettre))
             {
-
                 string line;
 
                 while ((line = reader.ReadLine()) != null) // Affiche toutes les lignes.
@@ -99,29 +108,106 @@ namespace ProjetFinal
         }
 
 
-
-        static void Main(string[] args)
+        static int SaisieInt(int minimum = 0, int maximum = int.MaxValue)
         {
+            int valeur = 0;
 
-            Lettre[] lettres = CreerLettres(4);
 
-            int s = 0;
-            foreach (Lettre l in lettres)
+            while (valeur <minimum || valeur>maximum)
             {
-                Console.WriteLine($"{l.Id} : {l.Quantite}");
-                s += l.Quantite;
+                try
+                {
+                    valeur = int.Parse(Console.ReadLine());
+                }
+                catch
+                {
+                    valeur = 0;
+                }
+
+            }
+            return valeur;
+        }
+
+
+        static async Task Main(string[] args)
+        {
+            // Create a CancellationTokenSource
+            var cts = new CancellationTokenSource();
+
+
+
+            Dictionnaire dico = ChoisirLangue(); // Choisit la langue du dictionnaire à utiliser pour le reste du jeu
+            dico.TriRapide(0, dico.Length - 1);
+
+
+            Console.WriteLine($"Vous avez choisis le dictionnaire en {dico.Langue switch { 'F' => "Français", 'E' => "Anglais" }}\n");
+
+
+            Console.WriteLine("Veuillez saisir le nombre de joueurs (minimum 2)");
+            int nbJoueurs = SaisieInt(2);
+
+            Joueur[] joueurs = new Joueur[nbJoueurs];
+
+            Console.Clear();
+            for (int i = 0; i < nbJoueurs; i++)
+            {
+                Console.WriteLine($"Entrez le nom du joueur {i+1}:");
+                joueurs[i] = new Joueur(Console.ReadLine());
+                Console.Clear();
             }
 
-
-            Console.WriteLine();
-            De d = new De(lettres);
-
+            Console.WriteLine("Veuillez saisir la taille du plateau (minimum 4)");
+            int taille = SaisieInt(4);
 
 
+            Console.Clear();
+            Plateau plateau = new Plateau(taille);
 
-            //Dictionnaire dico = ChoisirLangue(); // Choisit la langue du dictionnaire à utiliser pour le reste du jeu
 
-            //Console.WriteLine($"Vous avez choisis le dictionnaire en {dico.Langue switch{'F' => "Français", 'E' => "Anglais"}}");
+            while (true) // Boucle principale
+            {
+
+                foreach (Joueur j in joueurs) { // Fait le tour de tout les joueurs
+
+                    Console.WriteLine("Scores: ");
+                    foreach (Joueur joueur in joueurs)
+                    {
+                        Console.WriteLine($"{joueur.Name}: {joueur.Score}pts ");
+                    }
+
+
+                    Console.WriteLine($"\n\nC'est le tour de {j.Name}\n");
+                    plateau.Melanger();
+                    Console.WriteLine(plateau.toString());
+
+                    // Commence une nouvelle tache qui annulera le token quand 60 secondes se seront déroulées.
+                    Task timerTask = Task.Run(async () =>
+                    {   
+                        await Task.Delay(60000); // Attends 60 secondes
+                        cts.Cancel(); // Annule le token
+                    });
+
+                    // Commence une tache parallèle qui lira les entrés du joueur
+                    Task inputTask = Task.Run(() =>
+                    { while (!cts.Token.IsCancellationRequested) // Cette ligne s'assure que la boucle tourne tant que le token a pas été annulé
+                        {
+                            string mot = Console.ReadLine();
+                            Console.WriteLine($"{j.Name} a joué le mot {mot}");
+                        }
+                    });
+
+                    await timerTask;
+
+                    // Quand le timer se termine, on s'assure que toutes les taches sont finies
+                    cts.Cancel();
+
+                    // Recrée un nouveau token
+                    cts = new CancellationTokenSource();
+                    Console.Clear();
+
+                }
+            }
+
 
 
 

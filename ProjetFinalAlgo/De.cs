@@ -10,8 +10,11 @@ namespace ProjetFinal
     internal class De
     {
         private Lettre[] faces;
+        private Lettre faceVisible;
+
 
         Random random = new Random();
+
         public char[] Faces
         {
             get {
@@ -27,24 +30,37 @@ namespace ProjetFinal
             }
         }
 
+        public Lettre FaceVisible
+        {
+            get{ return faceVisible; } 
+        }
+
         
-        public De(Lettre[] choix)
+        public De(List<Lettre> choix)
         {
             this.faces = new Lettre[6]; 
 
             for (int i = 0; i < 6; i++)
             {
-                int n = random.Next(0, 26);
+                int n = random.Next(0, choix.Count);
+
                 while (choix[n].Quantite <= 0)
                 {
-                    n = random.Next(0, 26);
+                    n = random.Next(0, choix.Count);
                 }
 
                 this.faces[i] = choix[n];
-                choix[n].Quantite--;
+                choix.RemoveAt(n);
 
             }
+            this.faceVisible = faces[0];
 
+        }
+
+
+        public void LanceDe()
+        {
+            faceVisible = faces[random.Next(0, 6)];
         }
 
 

@@ -225,9 +225,9 @@ namespace ProjetFinal
                 int millieu = (gauche + droite) / 2;
 
                 // Trie la première moitié
-                this.TriFusion( gauche, millieu);
+                TriFusion( gauche, millieu);
                 // Trie la deuxième moitié
-                this.TriFusion( millieu + 1, droite);
+                TriFusion( millieu + 1, droite);
                 
                 // Fusiononne les deux moitiés.
                 Fusion(this.mots, gauche, millieu, droite);
