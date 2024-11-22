@@ -18,7 +18,7 @@ namespace ProjetFinal.Tests
 
         public void VerifierLettres()
         {
-            Lettre[] l = Program.CreerLettres();
+            Lettre[] l = Jeu.CreerLettres();
 
 
             Lettre[] centLettres = Lettre.Ponderation(l);

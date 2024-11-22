@@ -51,7 +51,7 @@ namespace ProjetFinal.Tests
             // Va chercher un dictionnaire de mots à taille réduite (550 mots) pour tester rapidement les vitesses des algorithmes de tri.
 
             string loc =
-                $"{Program.GetParentLoop(AppDomain.CurrentDomain.BaseDirectory, 5)}\\\\ProjetFinalAlgo\\\\Assets\\\\MotsTests.txt";
+                $"{Jeu.GetParentLoop(AppDomain.CurrentDomain.BaseDirectory, 5)}\\\\ProjetFinalAlgo\\\\Assets\\\\MotsTests.txt";
 
             string[] mots = File.ReadAllText(loc)
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries); // Va chercher un dictionnaire de mots

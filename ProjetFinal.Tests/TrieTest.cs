@@ -36,7 +36,7 @@ namespace ProjetFinal.Tests
         [TestMethod]
         public void TestTempsDictionnaire()
         {
-            string[] mots = File.ReadAllText(Program.pathFR).Split(' ', StringSplitOptions.RemoveEmptyEntries); // Va chercher un fichier contenant de mots
+            string[] mots = File.ReadAllText(Jeu.pathFR).Split(' ', StringSplitOptions.RemoveEmptyEntries); // Va chercher un fichier contenant de mots
 
             Dictionnaire dico = new  Dictionnaire(mots, 'f') ; // Crée un nouveau dictionnaire
 

@@ -103,7 +103,7 @@ namespace ProjetFinal
         /// <returns>Tableau de Lettre</returns>
         public static Lettre[] CreerLettresDisponibles(int taille)
         {
-            Lettre[] l = Program.CreerLettres();
+            Lettre[] l = Jeu.CreerLettres();
             Lettre[] centLettres = Lettre.Ponderation(l);
             Lettre[] t = Lettre.CreerPossibilitesLettres(centLettres, taille);
 
