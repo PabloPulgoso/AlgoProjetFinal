@@ -76,7 +76,7 @@ namespace ProjetFinal
         }
 
 
-        static Lettre[] CreerLettres()
+        static Lettre[] CreerLettres(int taille)
         {
             List<Lettre> lettres = new List<Lettre>();   
 
@@ -91,7 +91,7 @@ namespace ProjetFinal
                 {
                     string[] infos = line.Split(';');
 
-                    lettres.Add(new Lettre(char.Parse(infos[0]), int.Parse(infos[2]), int.Parse(infos[1])));
+                    lettres.Add(new Lettre(char.Parse(infos[0]), int.Parse((infos[2])), int.Parse(infos[1])));
                 }
             }
 
@@ -103,7 +103,7 @@ namespace ProjetFinal
         static void Main(string[] args)
         {
 
-            Lettre[] lettres = CreerLettres();
+            Lettre[] lettres = CreerLettres(4);
 
             int s = 0;
             foreach (Lettre l in lettres)
@@ -112,7 +112,8 @@ namespace ProjetFinal
                 s += l.Quantite;
             }
 
-            Console.WriteLine(s/6);
+
+            Console.WriteLine();
             De d = new De(lettres);
 
 
