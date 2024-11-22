@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 
 //Je met des commentaires içi pour qu'on écrive les choses à faire
 
@@ -227,79 +228,117 @@ namespace ProjetFinal
 
                     // Commence une tache parallèle qui lira les entrés du joueur
                     Task inputTask = Task.Run(() =>
-                    { while (!cts.Token.IsCancellationRequested) // Cette ligne s'assure que la boucle tourne tant que le token a pas été annulé
+                    {
+                        StringBuilder inputBuffer = new StringBuilder();
+                        while
+                            (!cts.Token
+                                .IsCancellationRequested) // Cette ligne s'assure que la boucle tourne tant que le token a pas été annulé
                         {
 
-
-                            string motJoue = Console.ReadLine().ToUpper(); // Lit le mot écrit par l'utilisateur
-                            while (motJoue == null || motJoue == "")
+                            if (Console.KeyAvailable)
                             {
-                                motJoue = Console.ReadLine().ToUpper(); // Securise la saisie
-
-                            }
-
-                            bool ApparaitPlateau = plateau.Rechercher(motJoue); // Recherche dans le plateau si le mot apparait
-
-                            bool ExisteDico = false;
-
-                            if (ApparaitPlateau)
-                            {
-                                ExisteDico = dico.Existe(motJoue);
-                            }
-
-                            bool jouable = JoueurActif.Jouable(motJoue);
-
-                            bool valide = ApparaitPlateau && ExisteDico && jouable;
-                            int pointsRapportes = 0;
-
-                            (bool, bool, bool) bools = (ApparaitPlateau, ExisteDico, jouable);
-                            
-                            
-
-                            if (valide)
-                            {
-                                foreach (char c in motJoue)
+                                ConsoleKeyInfo keyInfo = Console.ReadKey(intercept: true);
+                                if (keyInfo.Key == ConsoleKey.Enter)
                                 {
-                                    pointsRapportes += ValeursLettres[c];
+                                    string motJoue = inputBuffer.ToString().Trim().ToUpper(); // Lit le mot écrit par l'utilisateur
+                                    inputBuffer.Clear();
+                                    Console.WriteLine();
+
+                                    if (!string.IsNullOrEmpty(motJoue))
+                                    {
+                                        bool ApparaitPlateau =
+                                            plateau.Rechercher(motJoue); // Recherche dans le plateau si le mot apparait
+
+                                        bool ExisteDico = false;
+
+                                        if (ApparaitPlateau)
+                                        {
+                                            ExisteDico = dico.Existe(motJoue);
+                                        }
+
+                                        bool jouable = JoueurActif.Jouable(motJoue);
+
+                                        bool valide = ApparaitPlateau && ExisteDico && jouable;
+                                        int pointsRapportes = 0;
+
+                                        (bool, bool, bool) bools = (ApparaitPlateau, ExisteDico, jouable);
+
+
+
+                                        if (valide)
+                                        {
+                                            foreach (char c in motJoue)
+                                            {
+                                                pointsRapportes += ValeursLettres[c];
+                                            }
+
+                                            Console.WriteLine(
+                                                $"{JoueurActif.Name} a joué le mot {motJoue} qui est valide et lui rapporte {pointsRapportes} points!");
+                                            JoueurActif.AjouterMotJoue(motJoue, pointsRapportes);
+
+                                            if (pointsRapportes > MeilleurMot.Item2)
+                                            {
+                                                Console.WriteLine("Nouveau meilleur mot!!!");
+                                                MeilleurMot = new Tuple<string, int, Joueur>(motJoue, pointsRapportes,
+                                                    JoueurActif);
+                                            }
+
+                                        }
+                                        else
+                                        {
+                                            switch (bools)
+                                            {
+                                                case (false, false, true):
+                                                    Console.WriteLine($"{motJoue} n'apparait pas dans le plateau.");
+                                                    break;
+                                                case (false, true, false):
+                                                    Console.WriteLine($"{motJoue} n'apparait pas dans le plateau.");
+                                                    break;
+                                                case (false, true, true):
+                                                    Console.WriteLine($"{motJoue} n'apparait pas dans le plateau.");
+                                                    break;
+                                                case (true, false, false):
+                                                    Console.WriteLine(
+                                                        $"{motJoue} n'apparait pas dans le dictionnaire.");
+                                                    break;
+                                                case (true, false, true):
+                                                    Console.WriteLine(
+                                                        $"{motJoue} n'apparait pas dans le dictionnaire.");
+                                                    break;
+                                                case (true, true, false):
+                                                    Console.WriteLine($"Vous avez déjà joué le mot {motJoue}.");
+                                                    break;
+
+                                            }
+
+                                        }
+                                    }
                                 }
 
-                                Console.WriteLine($"{JoueurActif.Name} a joué le mot {motJoue} qui est valide et lui rapporte {pointsRapportes} points!");
-                                JoueurActif.AjouterMotJoue(motJoue,pointsRapportes);
-
-                                if (pointsRapportes > MeilleurMot.Item2)
+                                else if (keyInfo.Key == ConsoleKey.Backspace)
                                 {
-                                    Console.WriteLine("Nouveau meilleur mot!!!");
-                                    MeilleurMot = new Tuple<string, int, Joueur>(motJoue, pointsRapportes, JoueurActif);
+                                    // Check if there is any character to delete
+                                    if (inputBuffer.Length > 0)
+                                    {
+                                        // Move the cursor back one position
+                                        Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                                        // Overwrite the character with a space
+                                        Console.Write(' ');
+                                        // Move the cursor back again
+                                        Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                                        // Remove the last character from the buffer
+                                        inputBuffer.Remove(inputBuffer.Length - 1, 1);
+                                    }
                                 }
-
-                            }
-                            else
-                            {
-                                switch (bools)
+                                else
                                 {
-                                    case (false, false, true):
-                                        Console.WriteLine($"{motJoue} n'apparait pas dans le plateau.");
-                                        break;
-                                    case (false, true, false):
-                                        Console.WriteLine($"{motJoue} n'apparait pas dans le plateau.");
-                                        break;
-                                    case (false, true, true):
-                                        Console.WriteLine($"{motJoue} n'apparait pas dans le plateau.");
-                                        break;
-                                    case (true, false, false):
-                                        Console.WriteLine($"{motJoue} n'apparait pas dans le dictionnaire.");
-                                        break;
-                                    case (true, false, true):
-                                        Console.WriteLine($"{motJoue} n'apparait pas dans le dictionnaire.");
-                                        break;
-                                    case (true, true, false):
-                                        Console.WriteLine($"Vous avez déjà joué le mot {motJoue}.");
-                                        break;
-
+                                    // Append the character to the input buffer
+                                    inputBuffer.Append(keyInfo.KeyChar);
+                                    // Write the character to the console
+                                    Console.Write(keyInfo.KeyChar); // Display the character
                                 }
-
                             }
-
+                           
                         }
                     });
 
