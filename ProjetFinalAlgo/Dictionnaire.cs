@@ -17,9 +17,15 @@ namespace ProjetFinal
         /// </summary>
         private string[] mots;
 
+        /// <summary>
+        /// Represente la langue des mots dans le dictionnaire
+        /// </summary>
         private char langue;
 
-
+        /// <summary>
+        /// Arbre qui sert à chercher les mots dans le dictionnaire.
+        /// </summary>
+        private Trie arbre =  new Trie() ;
 
 
         // Propriétés publiques
@@ -60,7 +66,7 @@ namespace ProjetFinal
             if (dico != null)
             {
                 this.mots = dico.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-                this.langue = langue;
+                this.langue = char.ToUpper(langue);
 
             }
             else
@@ -161,7 +167,26 @@ namespace ProjetFinal
             return des;
         }
 
+        /// <summary>
+        /// Crée l'arbre associé au dictionnaire.
+        /// </summary>
+        public void toTrie()
+        {
+            foreach (string mot in mots)
+            {
+                arbre.InsererMot(mot);
+            }
+        }
 
+        /// <summary>
+        /// Vérifie si un mot apparait dans le dictionnaire.
+        /// </summary>
+        /// <param name="mot">Mot dont on veut verifier l'existance</param>
+        /// <returns>Vrai s'il apparait, faux sinon.</returns>
+        public bool Existe(string mot)
+        {
+            return arbre.ChercherMot(mot);
+        }
 
 
 

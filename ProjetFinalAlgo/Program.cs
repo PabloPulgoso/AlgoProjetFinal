@@ -17,6 +17,7 @@ namespace ProjetFinal
         public static readonly string pathLettre = $"{GetParentLoop(AppDomain.CurrentDomain.BaseDirectory, 5)}\\ProjetFinalAlgo\\Assets\\Lettres.txt";
 
 
+
         public static string GetParentLoop(string Path, int number)
         {
             string result = Path;
@@ -137,8 +138,8 @@ namespace ProjetFinal
 
 
             Dictionnaire dico = ChoisirLangue(); // Choisit la langue du dictionnaire à utiliser pour le reste du jeu
-            dico.TriRapide(0, dico.Length - 1);
-
+            dico.TriRapide(0, dico.Length - 1); // Trie le dictionnaire
+            dico.toTrie(); // Crée l'arbre de recherche qui va servir à faire marcher le dictionnaire.
 
             Console.WriteLine($"Vous avez choisis le dictionnaire en {dico.Langue switch { 'F' => "Français", 'E' => "Anglais" }}\n");
 

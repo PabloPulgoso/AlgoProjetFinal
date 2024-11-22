@@ -9,12 +9,22 @@ namespace ProjetFinal
 {
     internal class De
     {
+        /// <summary>
+        /// Représente les faces du dé.
+        /// </summary>
         private Lettre[] faces;
+
+        /// <summary>
+        /// Représente la face visible du dé.
+        /// </summary>
         private Lettre faceVisible;
 
 
         Random random = new Random();
 
+        /// <summary>
+        /// Lettres sur chaque face du dé.
+        /// </summary>
         public char[] Faces
         {
             get {
@@ -30,12 +40,18 @@ namespace ProjetFinal
             }
         }
 
+        /// <summary>
+        /// Face visible du dé.
+        /// </summary>
         public Lettre FaceVisible
         {
             get{ return faceVisible; } 
         }
 
-        
+        /// <summary>
+        /// Crée un nouveau dé en prenant au hasard des lettres dans une liste de lettres. Supprime de la liste les lettres utilisée.
+        /// </summary>
+        /// <param name="choix">Liste de lettres parmis lesquelles il faut choisir.</param>
         public De(List<Lettre> choix)
         {
             this.faces = new Lettre[6]; 
@@ -57,7 +73,9 @@ namespace ProjetFinal
 
         }
 
-
+        /// <summary>
+        /// Lance le dé et choisit au hasard une lettre parmis les 6 faces du dés pour devenir visible.
+        /// </summary>
         public void LanceDe()
         {
             faceVisible = faces[random.Next(0, 6)];
