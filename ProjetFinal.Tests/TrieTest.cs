@@ -34,7 +34,7 @@ namespace ProjetFinal.Tests
         }
 
         [TestMethod]
-        public void TestTempsDictionnaire()
+        public void TestTempsDictionnaire() // Chronomètre le temps que met à se créer un arbre à partir dun dictionnaire.
         {
             string[] mots = File.ReadAllText(Jeu.pathFR).Split(' ', StringSplitOptions.RemoveEmptyEntries); // Va chercher un fichier contenant de mots
 

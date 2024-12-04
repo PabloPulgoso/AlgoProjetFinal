@@ -46,6 +46,9 @@ namespace ProjetFinal
             get { return mots.Length; }
         }
 
+        /// <summary>
+        /// Langue du dictionnaire.
+        /// </summary>
         public char Langue
         {
             get { return langue; }

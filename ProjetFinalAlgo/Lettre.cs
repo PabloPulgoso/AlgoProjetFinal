@@ -9,26 +9,38 @@ namespace ProjetFinal
 {
     internal class Lettre
     {
-        private int quantite;
-        private int poids;
-        private char id;
+        private int quantite;   // Quantité disponible de la lettre.
+        private int poids;  // Poids de la lettre.
+        private char id;    // Charatère de la lettre.
 
+        /// <summary>
+        /// Quantité disponible de la lettre.
+        /// </summary>
         public int Quantite
         {
             get { return quantite; }
             set { quantite = value; }
         }
-
+        /// <summary>
+        /// Poids de la lettre.
+        /// </summary>
         public int Poids
         {
             get { return poids; }
         }
-
+        /// <summary>
+        /// Charatère de la lettre.
+        /// </summary>
         public char Id
         {
             get { return id; }
         }
-
+        /// <summary>
+        /// Crée une nouvelle lettre.
+        /// </summary>
+        /// <param name="id">Charactère de la lettre.</param>
+        /// <param name="quantite">Quantité disponible de cette lettre.</param>
+        /// <param name="poids">Poids de cette lettre.</param>
         public Lettre(char id, int quantite, int poids)
         {
             this.id = id;
@@ -36,7 +48,10 @@ namespace ProjetFinal
             this.poids = poids;
 
         }
-
+        /// <summary>
+        /// Crée une nouvelle copie de la lettre donnée
+        /// </summary>
+        /// <param name="l">Lettre à copier.</param>
         public Lettre(Lettre l)
         {
             this.poids = l.poids;
@@ -108,6 +123,15 @@ namespace ProjetFinal
             Lettre[] t = Lettre.CreerPossibilitesLettres(centLettres, taille);
 
             return t;
+        }
+
+        /// <summary>
+        /// Décrit le lettre.
+        /// </summary>
+        /// <returns>Id:Poids</returns>
+        public override string ToString()
+        {
+            return $"{this.Id}: {this.poids}pts";
         }
     }
 }
