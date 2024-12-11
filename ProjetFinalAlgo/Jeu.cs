@@ -471,7 +471,10 @@ namespace ProjetFinal
                                             }
 
                                         }
+
                                     }
+
+
                                 }
 
                                 else if (keyInfo.Key == ConsoleKey.Backspace)
@@ -510,6 +513,7 @@ namespace ProjetFinal
 
                     // Recrée un nouveau token
                     cts = new CancellationTokenSource();
+                    Console.Clear();
                     Console.Clear();
 
                 }
