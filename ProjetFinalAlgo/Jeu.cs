@@ -13,6 +13,8 @@ namespace ProjetFinal
 {
     internal class Jeu
     {
+        
+
         public static readonly string pathEN = $"{GetParentLoop(AppDomain.CurrentDomain.BaseDirectory,5)}\\ProjetFinalAlgo\\Assets\\MotsPossiblesEN.txt";
         public static readonly string pathFR = $"{GetParentLoop(AppDomain.CurrentDomain.BaseDirectory, 5)}\\ProjetFinalAlgo\\Assets\\MotsPossiblesFR.txt";
         public static readonly string pathLettre = $"{GetParentLoop(AppDomain.CurrentDomain.BaseDirectory, 5)}\\ProjetFinalAlgo\\Assets\\Lettres.txt";
@@ -140,6 +142,7 @@ namespace ProjetFinal
             while (true) 
             {
                 string input = Console.ReadLine();
+
                 if (int.TryParse(input, out valeur))
                 {
                     if (valeur >= minimum && valeur <= maximum)
@@ -231,8 +234,7 @@ namespace ProjetFinal
                     {
                         StringBuilder inputBuffer = new StringBuilder();
                         while
-                            (!cts.Token
-                                .IsCancellationRequested) // Cette ligne s'assure que la boucle tourne tant que le token a pas été annulé
+                            (!cts.Token.IsCancellationRequested) // Cette ligne s'assure que la boucle tourne tant que le token a pas été annulé
                         {
 
                             if (Console.KeyAvailable)
@@ -246,8 +248,7 @@ namespace ProjetFinal
 
                                     if (!string.IsNullOrEmpty(motJoue))
                                     {
-                                        bool ApparaitPlateau =
-                                            plateau.Rechercher(motJoue); // Recherche dans le plateau si le mot apparait
+                                        bool ApparaitPlateau = plateau.Rechercher(motJoue); // Recherche dans le plateau si le mot apparait
 
                                         bool ExisteDico = false;
 
@@ -272,15 +273,13 @@ namespace ProjetFinal
                                                 pointsRapportes += ValeursLettres[c];
                                             }
 
-                                            Console.WriteLine(
-                                                $"{JoueurActif.Name} a joué le mot {motJoue} qui est valide et lui rapporte {pointsRapportes} points!");
+                                            Console.WriteLine($"{JoueurActif.Name} a joué le mot {motJoue} qui est valide et lui rapporte {pointsRapportes} points!");
                                             JoueurActif.AjouterMotJoue(motJoue, pointsRapportes);
 
                                             if (pointsRapportes > MeilleurMot.Item2)
                                             {
                                                 Console.WriteLine("Nouveau meilleur mot!!!");
-                                                MeilleurMot = new Tuple<string, int, Joueur>(motJoue, pointsRapportes,
-                                                    JoueurActif);
+                                                MeilleurMot = new Tuple<string, int, Joueur>(motJoue, pointsRapportes,JoueurActif);
                                             }
 
                                         }
