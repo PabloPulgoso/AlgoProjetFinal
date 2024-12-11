@@ -82,6 +82,11 @@ namespace ProjetFinal
             }
         }
 
+        /// <summary>
+        /// Recherche un mot dans le plateau.
+        /// </summary>
+        /// <param name="word">Mot à chercher.</param>
+        /// <returns>Vrai si le mot apparait, faux sinon.</returns>
         public bool Rechercher(string word)
         {
             for (int i = 0; i < taille; i++)

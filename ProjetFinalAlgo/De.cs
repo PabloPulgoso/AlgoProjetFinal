@@ -81,8 +81,20 @@ namespace ProjetFinal
             faceVisible = faces[random.Next(0, 6)];
         }
 
+        /// <summary>
+        /// Retourne un string qui décrit le dé.
+        /// </summary>
+        /// <returns>string</returns>
+        public override string ToString()
+        {
+            string s = $"Face visible: {this.faceVisible.ToString()}\nToutes les faces:\n";
 
+            foreach (var face in this.faces)
+            {
+                s += $"{face.ToString()}\n";
+            }
 
-
+            return s;
+        }
     }
 }

@@ -2,25 +2,37 @@
 using System.Diagnostics;
 using System.IO;
 using System.Text;
-
-//Je met des commentaires içi pour qu'on écrive les choses à faire
-
-
-
+using System.Collections.Generic;
+using System.Drawing;
 
 
 namespace ProjetFinal
 {
     internal class Jeu
     {
-        
-
+        /// <summary>
+        /// Path vers le dictionnaire en Anglais.
+        /// </summary>
         public static readonly string pathEN = $"{GetParentLoop(AppDomain.CurrentDomain.BaseDirectory,5)}\\ProjetFinalAlgo\\Assets\\MotsPossiblesEN.txt";
+        /// <summary>
+        /// Path vers le dictionnaire en Français.
+        /// </summary>
         public static readonly string pathFR = $"{GetParentLoop(AppDomain.CurrentDomain.BaseDirectory, 5)}\\ProjetFinalAlgo\\Assets\\MotsPossiblesFR.txt";
+        /// <summary>
+        /// Path vers les lettres.
+        /// </summary>
         public static readonly string pathLettre = $"{GetParentLoop(AppDomain.CurrentDomain.BaseDirectory, 5)}\\ProjetFinalAlgo\\Assets\\Lettres.txt";
-        
+        /// <summary>
+        /// Path vers le dossier où seront stockées les images.
+        /// </summary>
+        public static readonly string pathImages = $"{GetParentLoop(AppDomain.CurrentDomain.BaseDirectory, 5)}\\ProjetFinalAlgo\\Images\\";
 
-
+        /// <summary>
+        /// Renvoie le path vers le n-ième parent de la localisation actuelle.
+        /// </summary>
+        /// <param name="Path">Localisation actuelle</param>
+        /// <param name="number">Nombre de dossiers à remonter.</param>
+        /// <returns>Path vers le n-ième parent de la localisation actuelle.</returns>
         public static string GetParentLoop(string Path, int number)
         {
             string result = Path;
@@ -98,7 +110,10 @@ namespace ProjetFinal
             return dico;
         }
 
-
+        /// <summary>
+        /// Crée une liste de lettres en se basant sur le fichier donné. Le fichier doit être un fichier texte où chaque ligne est une lettre sous la forme Lettre;Poids;Quantité
+        /// </summary>
+        /// <returns>Liste de lettres.</returns>
         public static Lettre[] CreerLettres()
         {
             List<Lettre> lettres = new List<Lettre>();   
@@ -107,7 +122,7 @@ namespace ProjetFinal
             {
                 string line;
 
-                while ((line = reader.ReadLine()) != null) // Affiche toutes les lignes.
+                while ((line = reader.ReadLine()) != null) // Lis toutes les lignes.
                 {
                     string[] infos = line.Split(';');
 
@@ -118,6 +133,10 @@ namespace ProjetFinal
             return lettres.ToArray();
         }
 
+        /// <summary>
+        /// Crée un dictionnaire avec toutes les lettres et leur poids à partir d'un fichier donné. Le fichier doit être un fichier texte où chaque ligne est une lettre sous la forme Lettre;Poids;Quantité
+        /// </summary>
+        /// <returns>Dictionnaire avec toutes les lettres et leur poids.</returns>
         public static Dictionary<char, int> ValeurLettres()
         {
             Dictionary<char, int> valeurs = new Dictionary<char, int>();
@@ -135,6 +154,12 @@ namespace ProjetFinal
             return valeurs;
         }
 
+        /// <summary>
+        /// Assure une saisie sécurisée d'un entier.
+        /// </summary>
+        /// <param name="minimum">Valeur minimum que peux prendre l'entier.</param>
+        /// <param name="maximum">Valeur maximum que peux prendre l'entier.</param>
+        /// <returns>L'entier une fois que la saisie est correcte.</returns>
         static int SaisieInt(int minimum = 0, int maximum = int.MaxValue)
         {
             int valeur;
@@ -161,14 +186,148 @@ namespace ProjetFinal
             }
         }
 
+        /// <summary>
+        /// Crée un nuage de mot à partir des mots joués par une liste de joueurs.
+        /// </summary>
+        /// <param name="joueurs">Liste de joueurs à partir de laquelle on veut un nuage de mots.</param>
+        public static void CreerNuage(Joueur[] joueurs)
+        {
+            Dictionary<string, int> d = new Dictionary<string, int>();
 
+
+            foreach (Joueur j in joueurs)
+            {
+                foreach (string mot in j.MotJoues)
+                {
+                    if (d.ContainsKey(mot))
+                    {
+                        d[mot] += 1;
+                    }
+                    else
+                    {
+                        d[mot] = 1;
+                    }
+
+                }
+            }
+
+            
+            Bitmap nuageDeMotsImage = CreateWordCloud(d,800,600);
+
+            DateTime now = DateTime.Now;
+            string date = now.ToString("dd-MM-yyyy_HH-mm");
+
+
+            string outputPath = $"{Jeu.pathImages}nuage-{date}.png";
+
+            nuageDeMotsImage.Save(outputPath, System.Drawing.Imaging.ImageFormat.Png);
+        }
+
+
+        /// <summary>
+        /// Fonction demandée à BlackBoxAI/
+        /// </summary>
+        /// <param name="wordFrequencies">Dictionnaire avec les fréquences des mots</param>
+        /// <param name="width">Largeur de l'image</param>
+        /// <param name="height">Hauteur de l'image</param>
+        /// <returns></returns>
+        public static Bitmap CreateWordCloud(Dictionary<string, int> wordFrequencies, int width, int height)
+        {
+            Bitmap bitmap = new Bitmap(width, height);
+            using (Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(Color.White);
+                Random rand = new Random();
+                List<RectangleF> rectangles = new List<RectangleF>();
+
+                // Center of the bitmap
+                float centerX = width / 2;
+                float centerY = height / 2;
+
+                foreach (var word in wordFrequencies)
+                {
+                    // Random font size based on frequency
+                    int fontSize = Math.Min(10 + (int)Math.Pow(word.Value, 2.1), 100);
+                    Font font = new Font("Arial", fontSize, FontStyle.Bold);
+
+                    // Measure the size of the word
+                    SizeF wordSize = g.MeasureString(word.Key, font);
+                    bool placed = false;
+
+                    // Spiral layout parameters
+                    float angle = 0;
+                    float radius = 0;
+
+                    // Try to place the word in a spiral pattern
+                    while (!placed && radius < Math.Max(width, height) / 2)
+                    {
+                        // Calculate position based on angle and radius
+                        float x = centerX + radius * (float)Math.Cos(angle) - wordSize.Width / 2;
+                        float y = centerY + radius * (float)Math.Sin(angle) - wordSize.Height / 2;
+
+                        RectangleF wordRect = new RectangleF(x, y, wordSize.Width, wordSize.Height);
+
+                        // Check for collision
+                        bool collision = false;
+                        foreach (var rect in rectangles)
+                        {
+                            if (rect.IntersectsWith(wordRect))
+                            {
+                                collision = true;
+                                break;
+                            }
+                        }
+
+                        // If no collision, draw the word
+                        if (!collision)
+                        {
+                            // Generate a random color
+                            Color color = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
+                            g.DrawString(word.Key, font, new SolidBrush(color), new PointF(x, y));
+                            rectangles.Add(wordRect); // Add the rectangle to the list
+                            placed = true;
+                        }
+
+                        // Increment angle and radius for spiral effect
+                        angle += 0.1f; // Adjust for tighter or looser spiral
+                        radius += 0.5f; // Adjust for spacing between words
+                    }
+
+                    // If the word couldn't be placed, skip it
+                    if (!placed)
+                    {
+                        Console.WriteLine($"Could not place the word: {word.Key}");
+                    }
+                }
+            }
+            return bitmap;
+        }
 
 
         static async Task Main(string[] args)
         {
+
+            // Vérifie que la librairie WordCloud soit installée.
+            bool lib = true;
+            try
+            {
+                var nuage = new WordCloud.WordCloud(800, 600);
+            }
+            catch (TypeLoadException)
+            {
+                Console.WriteLine("Veuillez installer la librarie WordCloud afin de pouvoir génerer le nuage de mots.");
+                lib = false;
+            }
+
+            if (!lib)
+            {
+                return;
+            }
+
+
+
             // Setup
             var cts = new CancellationTokenSource();  // Crée un CancellationTokenSource
-            
 
             Dictionary<char, int> ValeursLettres = ValeurLettres();
 
@@ -187,7 +346,7 @@ namespace ProjetFinal
             Console.Clear();
             for (int i = 0; i < nbJoueurs; i++)
             {
-                Console.WriteLine($"Entrez le nom du joueur {i+1}:");
+                Console.WriteLine($"Entrez le nom du joueur {i + 1}:");
                 joueurs[i] = new Joueur(Console.ReadLine());
                 Console.Clear();
             }
@@ -209,7 +368,8 @@ namespace ProjetFinal
             for (int round = 0; round < nbTours; round++) // Boucle principale
             {
 
-                foreach (Joueur JoueurActif in joueurs) { // Fait le tour de tout les joueurs
+                foreach (Joueur JoueurActif in joueurs)
+                { // Fait le tour de tout les joueurs
                     Console.Clear();
                     Console.WriteLine("Scores: ");
                     foreach (Joueur joueur in joueurs)
@@ -224,7 +384,7 @@ namespace ProjetFinal
 
                     // Commence une nouvelle tache qui annulera le token quand 60 secondes se seront déroulées.
                     Task timerTask = Task.Run(async () =>
-                    {   
+                    {
                         await Task.Delay(60000); // Attends 60 secondes
                         cts.Cancel(); // Annule le token
                     });
@@ -337,7 +497,7 @@ namespace ProjetFinal
                                     Console.Write(keyInfo.KeyChar); // Display the character
                                 }
                             }
-                           
+
                         }
                     });
 
@@ -365,9 +525,9 @@ namespace ProjetFinal
             if (gagnants.Length > 1)
             {
                 Console.Write("Nous avons une égalité entre ");
-                for (int i = 0; i<gagnants.Length; i++)
+                for (int i = 0; i < gagnants.Length; i++)
                 {
-                    Console.Write($"{gagnants[i].Name}{((i==gagnants.Length-2)?" et ":", ")}");
+                    Console.Write($"{gagnants[i].Name}{((i == gagnants.Length - 2) ? " et " : ", ")}");
                 }
                 Console.WriteLine("!!");
             }
@@ -382,6 +542,12 @@ namespace ProjetFinal
                 Console.WriteLine($"{j.Name}: {j.Score}pts   Son meilleur mot était: {j.MeilleurMot().Item1} qui lui a valu {j.MeilleurMot().Item2}");
             }
             Console.WriteLine($"{MeilleurMot.Item3.Name} a joué le meilleur mot de la partie: {MeilleurMot.Item1} qui vaut {MeilleurMot.Item2}pts!!");
+
+            CreerNuage(joueurs);
+
+            Console.WriteLine($"Nuage de mots enregistré à: {pathImages}");
+
+
         }
     }
 } 
