@@ -90,13 +90,24 @@ namespace ProjetFinal
                 langueTouche = Console.ReadKey().Key;
             }
 
-            string[] mots = File.ReadAllText(langueTouche switch
-                {
-                    ConsoleKey.F => pathFR,
-                    ConsoleKey.E => pathEN,
 
+            string motsString = "";
+
+            using (StreamReader reader = new StreamReader(langueTouche switch
+                   {
+                       ConsoleKey.F => pathFR,
+                       ConsoleKey.E => pathEN,
+
+                   }))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null) // Affiche toutes les lignes.
+                {
+                    motsString+=line+" ";
                 }
-            ).Split(' ', StringSplitOptions.RemoveEmptyEntries); // Va chercher un dictionnaire de mots
+            }
+
+            string[] mots =motsString.Split(' ', StringSplitOptions.RemoveEmptyEntries); // Va chercher un dictionnaire de mots
 
             Dictionnaire dico = new Dictionnaire(mots, langueTouche switch
             {
@@ -225,7 +236,7 @@ namespace ProjetFinal
 
 
         /// <summary>
-        /// Fonction demandée à BlackBoxAI/
+        /// Fonction demandée à BlackBoxAI
         /// </summary>
         /// <param name="wordFrequencies">Dictionnaire avec les fréquences des mots</param>
         /// <param name="width">Largeur de l'image</param>
