@@ -117,7 +117,7 @@ namespace ProjetFinal
                 return true;
             }
 
-            // Mark this cell as chemin
+            // Marque notre passage
             chemin[ligne, colonne] = true;
 
             // Explore toutes les cases adjacentes

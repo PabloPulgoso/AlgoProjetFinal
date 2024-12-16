@@ -84,7 +84,7 @@ namespace ProjetFinal
         /// <returns>String qui décrit l'état du joueur.</returns>
         public override string ToString()
         {
-            string s = $"Nom: {this.Name}\nScore: {this.score}\nMotsJoués:\n";
+            string s = $"{this.Name}\nScore: {this.score}\nMotsJoués:\n";
 
 
             foreach (var kvp in mot_joues_partie)

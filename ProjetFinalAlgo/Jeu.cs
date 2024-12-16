@@ -548,19 +548,19 @@ namespace ProjetFinal
             }
             else
             {
-                Console.WriteLine($"Le gagnant est {gagnants[0]}!!!");
+                Console.WriteLine($"Le gagnant est {gagnants[0].Name}!!!");
             }
 
             Console.WriteLine("Rappel des scores: ");
             foreach (Joueur j in joueurs)
             {
-                Console.WriteLine($"{j.Name}: {j.Score}pts   Son meilleur mot était: {j.MeilleurMot().Item1} qui lui a valu {j.MeilleurMot().Item2}");
+                Console.WriteLine($"{j.Name}: {j.Score}pts   Son meilleur mot était: {j.MeilleurMot().Item1} qui lui a valu {j.MeilleurMot().Item2}pts");
             }
-            Console.WriteLine($"{MeilleurMot.Item3.Name} a joué le meilleur mot de la partie: {MeilleurMot.Item1} qui vaut {MeilleurMot.Item2}pts!!");
+            Console.WriteLine($"\n{MeilleurMot.Item3.Name} a joué le meilleur mot de la partie: {MeilleurMot.Item1} qui vaut {MeilleurMot.Item2}pts!!");
 
             CreerNuage(joueurs);
 
-            Console.WriteLine($"Nuage de mots enregistré à: {pathImages}");
+            Console.WriteLine($"\nNuage de mots enregistré à: {pathImages}");
 
 
         }
