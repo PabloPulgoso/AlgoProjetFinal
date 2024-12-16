@@ -201,7 +201,7 @@ namespace ProjetFinal
         /// </summary>
         /// <param name="debut">Debut du tri</param>
         /// <param name="fin">Pivot du tri</param>
-        public void TriRapide(int debut, int fin) // Le string[] est là pour normaliser la signature pour les tests.
+        public void TriRapide(int debut, int fin) 
         {
             if (debut < fin)
             {
