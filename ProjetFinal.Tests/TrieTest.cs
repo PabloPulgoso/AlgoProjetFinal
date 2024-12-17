@@ -15,39 +15,39 @@ namespace ProjetFinal.Tests
     public class TrieTest
     {
         [TestMethod]
-        public void TestInserer() // Teste la methode pour inserer des éléments dans l'arbre
+        public void TestInserer()  
         {
-            Trie arbre = new Trie(); // Crée un nouvel arbre
-            string[] mots = new string[] { "Pablo", "Maxian", "Louis", "Théophile", "Louise" }; // Lsite de mots à inserer
+            Trie arbre = new Trie();  
+            string[] mots = new string[] { "Pablo", "Maxian", "Louis", "Théophile", "Louise" };  
 
             foreach (string s in mots)
             {
-                arbre.InsererMot(s);    // Insère mot par mot
+                arbre.InsererMot(s);    
 
             }
 
             foreach (string m in mots)
             {
-                Assert.IsTrue(arbre.ChercherMot(m)); // Verufie que tout les mots sont bien dans l'arbre
+                Assert.IsTrue(arbre.ChercherMot(m));  
             }
 
         }
 
         [TestMethod]
-        public void TestTempsDictionnaire() // Chronomètre le temps que met à se créer un arbre à partir dun dictionnaire.
+        public void TestTempsDictionnaire()  
         {
-            string[] mots = File.ReadAllText(Jeu.pathFR).Split(' ', StringSplitOptions.RemoveEmptyEntries); // Va chercher un fichier contenant de mots
+            string[] mots = File.ReadAllText(Jeu.pathFR).Split(' ', StringSplitOptions.RemoveEmptyEntries); 
 
-            Dictionnaire dico = new  Dictionnaire(mots, 'f') ; // Crée un nouveau dictionnaire
+            Dictionnaire dico = new  Dictionnaire(mots, 'f') ;  
 
-            Stopwatch chrono = new Stopwatch(); // Crée et lance un chrono
+            Stopwatch chrono = new Stopwatch(); 
             chrono.Start();
-            dico.toTrie(); // Crée un arbre à partir du dictionnaire
-            chrono.Stop(); // Arrete le chrono
+            dico.toTrie();  
+            chrono.Stop(); 
 
-            Console.WriteLine(chrono.Elapsed.TotalMilliseconds); // Affiche le temps mis pour la conversion
-            Assert.IsTrue(dico.Existe(mots[0])); // Verifie que le mot existe
-            Assert.IsFalse(dico.Existe("sdqosj")); // Verifie que le mot inventé n'apparait pas
+            Console.WriteLine(chrono.Elapsed.TotalMilliseconds);  
+            Assert.IsTrue(dico.Existe(mots[0]));  
+            Assert.IsFalse(dico.Existe("sdqosj"));  
 
         }
 

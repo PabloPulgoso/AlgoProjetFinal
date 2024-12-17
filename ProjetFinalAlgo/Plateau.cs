@@ -33,16 +33,16 @@ namespace ProjetFinal
         public Plateau(int taille)
         {
 
-            this.tab = new De[taille, taille]; // Crée le tableau qui représente le plateau.
+            this.tab = new De[taille, taille];  
             this.taille = taille;
 
-            List<Lettre> lettresDispo = new List<Lettre>(Lettre.CreerLettresDisponibles(taille)); // Crée une nouvelle liste de lettres qui contiendra suffisemment de lettres pour chaqque dé.
+            List<Lettre> lettresDispo = new List<Lettre>(Lettre.CreerLettresDisponibles(taille));  
 
             for (int i = 0; i < taille; i++)
             {
                 for (int j = 0; j < taille; j++)
                 {
-                    tab[i, j] = new De(lettresDispo); // Crée des dés pour chaque case du plateau.
+                    tab[i, j] = new De(lettresDispo);  
                 }
             }
 
@@ -60,7 +60,7 @@ namespace ProjetFinal
             {
                 for(int j = 0;j < taille; j++)
                 {
-                    s += $"{tab[i,j].FaceVisible.Id} "; // Parcours chaque case du plateau et affiche la case visible.
+                    s += $"{tab[i,j].FaceVisible.Id} ";  
                 }
 
                 s += "\n"; // Saute une ligne
@@ -105,33 +105,33 @@ namespace ProjetFinal
 
         private bool RechercheRecursive(int ligne, int colonne, string mot, int index, bool[,] chemin)
         {
-            // Si on a déjà trouvé toutes les lettres, on a alors trouvé le mot
+
+
             if (index == mot.Length)
             {
                 return false;
             }
 
-            // Vérifie si on est en dehors du tableau, si la case a déjà été visitée ou si le caractère est différent de celui que l'on recherche
+
             if (ligne < 0 || ligne >= taille || colonne < 0 || colonne >= taille || chemin[ligne, colonne] || tab[ligne, colonne].FaceVisible.Id != mot[index])
             {
                 return true;
             }
 
-            // Mark this cell as chemin
+
             chemin[ligne, colonne] = true;
 
-            // Explore toutes les cases adjacentes
-            bool found = !this.RechercheRecursive(ligne - 1, colonne, mot, index + 1, chemin) ||  // Haut
-                         !this.RechercheRecursive(ligne + 1, colonne, mot, index + 1, chemin) ||  // Bas
-                         !this.RechercheRecursive(ligne, colonne - 1, mot, index + 1, chemin) ||  // Gauche
-                         !this.RechercheRecursive(ligne, colonne + 1, mot, index + 1, chemin) ||  // Droite
-                         !this.RechercheRecursive(ligne - 1, colonne - 1, mot, index + 1, chemin) || // En haut à gauche
-                         !this.RechercheRecursive(ligne - 1, colonne + 1, mot, index + 1, chemin) || // En haut à droite
-                         !this.RechercheRecursive(ligne + 1, colonne - 1, mot, index + 1, chemin) || // En bas à gauche
-                         !this.RechercheRecursive(ligne + 1, colonne + 1, mot, index + 1, chemin);   // En bas à droite
 
-            // Repart en arrière
+            bool found = !this.RechercheRecursive(ligne - 1, colonne, mot, index + 1, chemin) ||   
+                         !this.RechercheRecursive(ligne + 1, colonne, mot, index + 1, chemin) ||   
+                         !this.RechercheRecursive(ligne, colonne - 1, mot, index + 1, chemin) ||  
+                         !this.RechercheRecursive(ligne, colonne + 1, mot, index + 1, chemin) ||   
+                         !this.RechercheRecursive(ligne - 1, colonne - 1, mot, index + 1, chemin) ||  
+                         !this.RechercheRecursive(ligne - 1, colonne + 1, mot, index + 1, chemin) ||  
+                         !this.RechercheRecursive(ligne + 1, colonne - 1, mot, index + 1, chemin) ||  
+                         !this.RechercheRecursive(ligne + 1, colonne + 1, mot, index + 1, chemin);    
 
+ 
             chemin[ligne, colonne] = false;
 
             return !found;

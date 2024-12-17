@@ -9,9 +9,21 @@ namespace ProjetFinal
 {
     internal class Lettre
     {
-        private int quantite;   // Quantité disponible de la lettre.
-        private int poids;  // Poids de la lettre.
-        private char id;    // Charatère de la lettre.
+
+        /// <summary>
+        /// Quantité disponible de la lettre.
+        /// </summary>
+        private int quantite;   
+
+        /// <summary>
+        /// Poids de la lettre.
+        /// </summary>
+        private int poids;   
+
+        /// <summary>
+        /// Charatère de la lettre.
+        /// </summary>
+        private char id;   
 
         /// <summary>
         /// Quantité disponible de la lettre.
@@ -89,16 +101,16 @@ namespace ProjetFinal
         /// <returns>Un tableau comprenant 100 lettres</returns>
         public static Lettre[] Ponderation(Lettre[] lettres )
         {
-            //créer un tableau sur 100
+
             Lettre[] tableauLettres = new Lettre[100]; 
 
-            //compteur pour parcourir le tableauLettres
+
             int compteur = 0;
 
-            //boucle parcourant le tableau en paramètre
+
             for(int i=0; i<lettres.Length; i++)
             {
-                //boucle en fonction du nombre de lettre dont nous avons besoin
+
                 for(int j = 0; j < lettres[i].quantite; j++)
                 {
                     

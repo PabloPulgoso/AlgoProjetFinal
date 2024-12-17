@@ -27,18 +27,18 @@ namespace ProjetFinal
         /// <param name="mot">Mot à ajouter à l'arbre</param>
         public void InsererMot(string mot)
         {
-            TrieNode current = racine; // Commence à parcourir l'arbre à sa racine
+            TrieNode current = racine;  
 
-            foreach (char c in mot ) // Parcours l'arbre en fonction des lettres dans le mot
+            foreach (char c in mot )  
             {
                 if (!current.Enfants.ContainsKey(c))
                 {
-                    current.Enfants[c] = new TrieNode(); // Si la branche suivante existe pas, on la crée
+                    current.Enfants[c] = new TrieNode();  
                 }
-                current = current.Enfants[c]; // On passe à  la branche suivante
+                current = current.Enfants[c];  
             }
 
-            current.FinDeMot = true; // Indique qu'un mot peut se terminer à la branche où l'on se situe
+            current.FinDeMot = true;  
         }
 
         /// <summary>
@@ -48,17 +48,17 @@ namespace ProjetFinal
         /// <returns>Vrai si il apparait dans l'arbre, faux sinon.</returns>
         public bool ChercherMot(string mot)
         {
-            TrieNode current = racine; // Se place à la racine
+            TrieNode current = racine;  
 
-            foreach (char c in mot) // Parcours l'arbre lettre à lettre
+            foreach (char c in mot)  
             {
                 if (!current.Enfants.ContainsKey(c)) 
                 {
-                    return false; // Si la branche suivante existe pas, alors le mot n'apparait pas dans le dictionnaire
+                    return false;  
                 }
-                current = current.Enfants[c]; // Passe à la branche suivante
+                current = current.Enfants[c];  
             } 
-            return current.FinDeMot; // Indique si la branche finale peut être la fin d'un mot ou non.
+            return current.FinDeMot;  
         }
     }
 }

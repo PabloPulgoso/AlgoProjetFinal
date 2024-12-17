@@ -31,16 +31,16 @@ namespace ProjetFinal
         /// Renvoie le path vers le n-ième parent de la localisation actuelle.
         /// </summary>
         /// <param name="Path">Localisation actuelle</param>
-        /// <param name="number">Nombre de dossiers à remonter.</param>
+        /// <param name="n">Nombre de dossiers à remonter.</param>
         /// <returns>Path vers le n-ième parent de la localisation actuelle.</returns>
-        public static string GetParentLoop(string Path, int number)
+        public static string GetParentLoop(string Path, int n)
         {
-            string result = Path;
-            for (int i = 0; i < number; i++)
+            string pathActuelle = Path;
+            for (int i = 0; i < n; i++)
             {
-                result = Directory.GetParent(result).FullName;
+                pathActuelle = Directory.GetParent(pathActuelle).FullName;
             }
-            return result;
+            return pathActuelle;
         }
 
 
@@ -51,16 +51,16 @@ namespace ProjetFinal
         /// <exception cref="ArgumentException">Renvoie une erreur si le fichier n'est pas accessible.</exception>
         static void AfficherFichier(string path)
         {
-            if (File.Exists(path)) // Verifie que le fichier existe.
+            if (File.Exists(path))  
             {
 
 
-                using (StreamReader reader = new StreamReader(path)) // Ouvre une liseuse et qui sera utilisée uniquement dans l'espace suivant.
+                using (StreamReader reader = new StreamReader(path))  
                 {   
 
                     
                     string line;
-                    while ((line = reader.ReadLine()) != null) // Affiche toutes les lignes.
+                    while ((line = reader.ReadLine()) != null)  
                     {
                         Console.WriteLine(line);
                     }
@@ -69,7 +69,7 @@ namespace ProjetFinal
             }
             else
             {
-                throw new ArgumentException("Path is incorrect"); // Si le fichier n'existe il renvoie une erreur.
+                throw new ArgumentException("Path is incorrect");  
             }
 
         }
@@ -82,18 +82,18 @@ namespace ProjetFinal
         {
             Console.WriteLine("Choisissez la langue dans laquelle vous voulez jouer (F pour FR ou E pour EN): ");
 
-            ConsoleKey langueTouche = Console.ReadKey().Key;
+            ConsoleKey toucheLangue = Console.ReadKey().Key;
 
-            while (langueTouche != ConsoleKey.F && langueTouche != ConsoleKey.E)
+            while (toucheLangue != ConsoleKey.F && toucheLangue != ConsoleKey.E)
             {
                 Console.WriteLine("\nVeuillez saisir une langue valide");
-                langueTouche = Console.ReadKey().Key;
+                toucheLangue = Console.ReadKey().Key;
             }
 
 
             string motsString = "";
 
-            using (StreamReader reader = new StreamReader(langueTouche switch
+            using (StreamReader reader = new StreamReader(toucheLangue switch
                    {
                        ConsoleKey.F => pathFR,
                        ConsoleKey.E => pathEN,
@@ -101,15 +101,15 @@ namespace ProjetFinal
                    }))
             {
                 string line;
-                while ((line = reader.ReadLine()) != null) // Affiche toutes les lignes.
+                while ((line = reader.ReadLine()) != null) 
                 {
-                    motsString+=line+" ";
+                    motsString += line + " ";
                 }
             }
 
-            string[] mots =motsString.Split(' ', StringSplitOptions.RemoveEmptyEntries); // Va chercher un dictionnaire de mots
+            string[] mots = motsString.Split(' ', StringSplitOptions.RemoveEmptyEntries); 
 
-            Dictionnaire dico = new Dictionnaire(mots, langueTouche switch
+            Dictionnaire dico = new Dictionnaire(mots, toucheLangue switch
             {
                 ConsoleKey.F => 'F',
                 ConsoleKey.E => 'E'
@@ -133,7 +133,7 @@ namespace ProjetFinal
             {
                 string line;
 
-                while ((line = reader.ReadLine()) != null) // Lis toutes les lignes.
+                while ((line = reader.ReadLine()) != null)  
                 {
                     string[] infos = line.Split(';');
 
@@ -238,48 +238,44 @@ namespace ProjetFinal
         /// <summary>
         /// Fonction demandée à BlackBoxAI
         /// </summary>
-        /// <param name="wordFrequencies">Dictionnaire avec les fréquences des mots</param>
-        /// <param name="width">Largeur de l'image</param>
-        /// <param name="height">Hauteur de l'image</param>
+        /// <param name="frequenceMots">Dictionnaire avec les fréquences des mots</param>
+        /// <param name="largeur">Largeur de l'image</param>
+        /// <param name="hauteur">Hauteur de l'image</param>
         /// <returns></returns>
-        public static Bitmap CreateWordCloud(Dictionary<string, int> wordFrequencies, int width, int height)
+        public static Bitmap CreateWordCloud(Dictionary<string, int> frequenceMots, int largeur, int hauteur)
         {
-            Bitmap bitmap = new Bitmap(width, height);
+            Bitmap bitmap = new Bitmap(largeur, hauteur);
             using (Graphics g = Graphics.FromImage(bitmap))
             {
                 g.Clear(Color.White);
-                Random rand = new Random();
+                Random r = new Random();
                 List<RectangleF> rectangles = new List<RectangleF>();
 
-                // Center of the bitmap
-                float centerX = width / 2;
-                float centerY = height / 2;
 
-                foreach (var word in wordFrequencies)
+                float centerX = largeur / 2;
+                float centerY = hauteur / 2;
+
+                foreach (var mot in frequenceMots)
                 {
-                    // Random font size based on frequency
-                    int fontSize = Math.Min(10 + (int)Math.Pow(word.Value, 2.1), 100);
+                     int fontSize = Math.Min(10 + (int)Math.Pow(mot.Value, 2.1), 100);
                     Font font = new Font("Arial", fontSize, FontStyle.Bold);
 
-                    // Measure the size of the word
-                    SizeF wordSize = g.MeasureString(word.Key, font);
-                    bool placed = false;
+                 
+                    SizeF wordSize = g.MeasureString(mot.Key, font);
+                    bool place = false;
 
-                    // Spiral layout parameters
+               
                     float angle = 0;
-                    float radius = 0;
+                    float rayon = 0;
 
-                    // Try to place the word in a spiral pattern
-                    while (!placed && radius < Math.Max(width, height) / 2)
+                     while (!place && rayon < Math.Max(largeur, hauteur) / 2)
                     {
-                        // Calculate position based on angle and radius
-                        float x = centerX + radius * (float)Math.Cos(angle) - wordSize.Width / 2;
-                        float y = centerY + radius * (float)Math.Sin(angle) - wordSize.Height / 2;
+                         float x = centerX + rayon * (float)Math.Cos(angle) - wordSize.Width / 2;
+                        float y = centerY + rayon * (float)Math.Sin(angle) - wordSize.Height / 2;
 
                         RectangleF wordRect = new RectangleF(x, y, wordSize.Width, wordSize.Height);
 
-                        // Check for collision
-                        bool collision = false;
+                         bool collision = false;
                         foreach (var rect in rectangles)
                         {
                             if (rect.IntersectsWith(wordRect))
@@ -289,25 +285,21 @@ namespace ProjetFinal
                             }
                         }
 
-                        // If no collision, draw the word
-                        if (!collision)
+                         if (!collision)
                         {
-                            // Generate a random color
-                            Color color = Color.FromArgb(rand.Next(256), rand.Next(256), rand.Next(256));
-                            g.DrawString(word.Key, font, new SolidBrush(color), new PointF(x, y));
-                            rectangles.Add(wordRect); // Add the rectangle to the list
-                            placed = true;
+                             Color color = Color.FromArgb(r.Next(256), r.Next(256), r.Next(256));
+                            g.DrawString(mot.Key, font, new SolidBrush(color), new PointF(x, y));
+                            rectangles.Add(wordRect);  
+                            place = true;
                         }
 
-                        // Increment angle and radius for spiral effect
-                        angle += 0.1f; // Adjust for tighter or looser spiral
-                        radius += 0.5f; // Adjust for spacing between words
+                         angle += 0.1f;  
+                        rayon += 0.5f; 
                     }
 
-                    // If the word couldn't be placed, skip it
-                    if (!placed)
+                     if (!place)
                     {
-                        Console.WriteLine($"Could not place the word: {word.Key}");
+                        Console.WriteLine($"Could not place the word: {mot.Key}");
                     }
                 }
             }
@@ -318,8 +310,7 @@ namespace ProjetFinal
         static async Task Main(string[] args)
         {
 
-            // Vérifie que la librairie WordCloud soit installée.
-            bool lib = true;
+             bool lib = true;
             try
             {
                 var nuage = new WordCloud.WordCloud(800, 600);
@@ -337,14 +328,13 @@ namespace ProjetFinal
 
 
 
-            // Setup
-            var cts = new CancellationTokenSource();  // Crée un CancellationTokenSource
+             var cts = new CancellationTokenSource();  
 
             Dictionary<char, int> ValeursLettres = ValeurLettres();
 
-            Dictionnaire dico = ChoisirLangue(); // Choisit la langue du dictionnaire à utiliser pour le reste du jeu
-            dico.TriRapide(0, dico.Length - 1); // Trie le dictionnaire
-            dico.toTrie(); // Crée l'arbre de recherche qui va servir à faire marcher le dictionnaire.
+            Dictionnaire dico = ChoisirLangue();  
+            dico.TriRapide(0, dico.Length - 1);  
+            dico.toTrie();  
 
             Console.WriteLine($"Vous avez choisis le dictionnaire en {dico.Langue switch { 'F' => "Français", 'E' => "Anglais" }}\n");
 
@@ -375,12 +365,13 @@ namespace ProjetFinal
 
             var MeilleurMot = new Tuple<string, int, Joueur>("", 0, joueurs[0]);
 
-            // Partie
-            for (int round = 0; round < nbTours; round++) // Boucle principale
+
+             for (int round = 0; round < nbTours; round++)  
             {
 
                 foreach (Joueur JoueurActif in joueurs)
-                { // Fait le tour de tout les joueurs
+                { 
+
                     Console.Clear();
                     Console.WriteLine("Scores: ");
                     foreach (Joueur joueur in joueurs)
@@ -393,19 +384,19 @@ namespace ProjetFinal
                     plateau.Melanger();
                     Console.WriteLine(plateau.toString());
 
-                    // Commence une nouvelle tache qui annulera le token quand 60 secondes se seront déroulées.
+
                     Task timerTask = Task.Run(async () =>
                     {
-                        await Task.Delay(60000); // Attends 60 secondes
-                        cts.Cancel(); // Annule le token
+                        await Task.Delay(60000); 
+                        cts.Cancel();  
                     });
 
-                    // Commence une tache parallèle qui lira les entrés du joueur
+
                     Task inputTask = Task.Run(() =>
                     {
                         StringBuilder inputBuffer = new StringBuilder();
                         while
-                            (!cts.Token.IsCancellationRequested) // Cette ligne s'assure que la boucle tourne tant que le token a pas été annulé
+                            (!cts.Token.IsCancellationRequested)  
                         {
 
                             if (Console.KeyAvailable)
@@ -413,13 +404,13 @@ namespace ProjetFinal
                                 ConsoleKeyInfo keyInfo = Console.ReadKey(intercept: true);
                                 if (keyInfo.Key == ConsoleKey.Enter)
                                 {
-                                    string motJoue = inputBuffer.ToString().Trim().ToUpper(); // Lit le mot écrit par l'utilisateur
+                                    string motJoue = inputBuffer.ToString().Trim().ToUpper();  
                                     inputBuffer.Clear();
                                     Console.WriteLine();
 
                                     if (!string.IsNullOrEmpty(motJoue))
                                     {
-                                        bool ApparaitPlateau = plateau.Rechercher(motJoue); // Recherche dans le plateau si le mot apparait
+                                        bool ApparaitPlateau = plateau.Rechercher(motJoue);  
 
                                         bool ExisteDico = false;
 
@@ -490,25 +481,18 @@ namespace ProjetFinal
 
                                 else if (keyInfo.Key == ConsoleKey.Backspace)
                                 {
-                                    // Check if there is any character to delete
-                                    if (inputBuffer.Length > 0)
+                                     if (inputBuffer.Length > 0)
                                     {
-                                        // Move the cursor back one position
-                                        Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
-                                        // Overwrite the character with a space
-                                        Console.Write(' ');
-                                        // Move the cursor back again
-                                        Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
-                                        // Remove the last character from the buffer
-                                        inputBuffer.Remove(inputBuffer.Length - 1, 1);
+                                         Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                                         Console.Write(' ');
+                                         Console.SetCursorPosition(Console.CursorLeft - 1, Console.CursorTop);
+                                         inputBuffer.Remove(inputBuffer.Length - 1, 1);
                                     }
                                 }
                                 else
                                 {
-                                    // Append the character to the input buffer
-                                    inputBuffer.Append(keyInfo.KeyChar);
-                                    // Write the character to the console
-                                    Console.Write(keyInfo.KeyChar); // Display the character
+                                     inputBuffer.Append(keyInfo.KeyChar);
+                                     Console.Write(keyInfo.KeyChar);  
                                 }
                             }
 
@@ -517,13 +501,11 @@ namespace ProjetFinal
 
                     await timerTask;
 
-                    // Quand le timer se termine, on s'assure que toutes les taches sont finies
-                    cts.Cancel();
+                     cts.Cancel();
 
                     await inputTask;
 
-                    // Recrée un nouveau token
-                    cts = new CancellationTokenSource();
+                     cts = new CancellationTokenSource();
                     Console.Clear();
                     Console.Clear();
 
@@ -531,8 +513,7 @@ namespace ProjetFinal
             }
 
 
-            // Fin de la partie
-            Console.Clear();
+             Console.Clear();
             Console.WriteLine("LA PARTIE EST TERMINEE!!\n\n");
 
             Joueur[] gagnants = joueurs.Maximum();

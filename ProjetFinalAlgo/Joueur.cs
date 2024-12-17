@@ -8,9 +8,20 @@ namespace ProjetFinal
 {
     internal class Joueur
     {
-        private string name; // Nom du joueur
-        private int score; // Score du joueur
-        private Dictionary<string, int> mot_joues_partie;// Mots joués dans la partie et points rapportés par chaque mot
+        /// <summary>
+        /// Nom du joueur.
+        /// </summary>
+        private string name;
+
+        /// <summary>
+        /// Score du joueur
+        /// </summary>
+        private int score;
+
+        /// <summary>
+        /// Mots joués dans la partie et points rapportés par chaque mot
+        /// </summary>
+        private Dictionary<string, int> mot_joues_partie; 
 
         /// <summary>
         /// Nom du joueur.
@@ -19,6 +30,7 @@ namespace ProjetFinal
         {
             get { return name; }
         }
+
         /// <summary>
         /// Score du joueur, modifiable uniquement si c'est pour augmenter le score.
         /// </summary>

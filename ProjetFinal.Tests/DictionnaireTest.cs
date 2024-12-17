@@ -32,7 +32,7 @@ namespace ProjetFinal.Tests
             bool attendu = false;
             bool resultat = dico.IsSorted();
 
-            Assert.AreEqual(attendu, resultat); // S'assure que le dictionnaire soit trié
+            Assert.AreEqual(attendu, resultat);  
         }
 
 
@@ -48,22 +48,30 @@ namespace ProjetFinal.Tests
         {
             Stopwatch chrono = new Stopwatch();
 
-            // Va chercher un dictionnaire de mots à taille réduite (550 mots) pour tester rapidement les vitesses des algorithmes de tri.
-
-            string loc =
-                $"{Jeu.GetParentLoop(AppDomain.CurrentDomain.BaseDirectory, 5)}\\\\ProjetFinalAlgo\\\\Assets\\\\MotsTests.txt";
-
-            string[] mots = File.ReadAllText(loc)
-                .Split(' ', StringSplitOptions.RemoveEmptyEntries); // Va chercher un dictionnaire de mots
+ 
+            string loc = $"{Jeu.GetParentLoop(AppDomain.CurrentDomain.BaseDirectory, 5)}\\\\ProjetFinalAlgo\\\\Assets\\\\MotsTests.txt";
 
 
+            string motsString = "";
 
-            Dictionnaire dico = new Dictionnaire(mots, 'T'); // Crée un nouveau dictionnaire
+            using (StreamReader reader = new StreamReader(loc))
+            {
+                string line;
+                while ((line = reader.ReadLine()) != null)
+                {
+                    motsString += line + " ";
+                }
+            }
+
+            string[] mots = motsString.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+
+            Dictionnaire dico = new Dictionnaire(mots, 'T');  
             int fin = dico.Length - 1;
 
             FonctionDeTri fonctionDeTri =
                 methodeDeTri
-                    switch // Choisit l'algorithme à chronometrer en fonction des paramètres donnés au test unitaire.
+                    switch  
                     {
                         "TriRapide" => dico.TriRapide,
                         "TriBulle" => dico.TriBulle,
@@ -71,18 +79,18 @@ namespace ProjetFinal.Tests
                     };
 
 
-            chrono.Start(); // Commence le chrono
-            fonctionDeTri(0, fin); // Apelle l'algorithme de tri que l'on veut chronometrer
-            chrono.Stop(); // Arrête le chrono
+            chrono.Start(); 
+            fonctionDeTri(0, fin);  
+            chrono.Stop();  
 
-            TimeSpan tempsEcoule = chrono.Elapsed; // Calcule le temps écoulé
+            TimeSpan tempsEcoule = chrono.Elapsed;  
 
-            // Affiche la longueur de la liste à trier, le nom de la methode utilisée et le temps écoulé pour trier.
+
             Console.WriteLine(
                 $"Longueur de la liste à trier {fin + 1} \nTri: {methodeDeTri} \nTemps écoulé: {tempsEcoule.TotalMilliseconds} ms");
 
 
-            Assert.IsTrue(dico.IsSorted(), "Le dictionnaire n'est pas trié"); // Verifie que le dictionnaire est trié.
+            Assert.IsTrue(dico.IsSorted(), "Le dictionnaire n'est pas trié");  
         }
 
 

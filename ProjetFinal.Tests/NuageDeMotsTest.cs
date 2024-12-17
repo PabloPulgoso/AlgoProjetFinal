@@ -18,7 +18,7 @@ namespace ProjetFinal.Tests
     public class NuageDeMotsTest
     {
         [TestMethod]
-        public void NuageDeMots() // Teste si on peut créer un nuage de mots à partir d'un dictionnaire.
+        public void NuageDeMots()  
         {
             Joueur[] joueurs = new Joueur[2];
             var mots = new Dictionary<string, int>

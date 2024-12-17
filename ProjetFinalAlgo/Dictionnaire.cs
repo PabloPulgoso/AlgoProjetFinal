@@ -28,7 +28,7 @@ namespace ProjetFinal
         private Trie arbre =  new Trie() ;
 
 
-        // Propriétés publiques
+        
 
         /// <summary>
         /// Ensemble de strings qui constituent le dictionnaire.
@@ -57,7 +57,7 @@ namespace ProjetFinal
 
 
 
-        // Constructeurs
+        
 
         /// <summary>
         /// Constructeur du dictionnaire.
@@ -194,7 +194,7 @@ namespace ProjetFinal
 
 
 
-        // Methodes de tri
+        
 
         /// <summary>
         /// Trie le tableau avec l'algorithme de tri rapide.
@@ -217,7 +217,7 @@ namespace ProjetFinal
         /// Trie le tableau avec l'algorithme du tri à bulle.
         /// </summary>
         /// <param name="tab">Tableau à trier</param>
-        public void TriBulle(int debut = 0, int fin = 0) // Les paramètres sont là pour normaliser la signature pour les tests.
+        public void TriBulle(int debut = 0, int fin = 0) 
         {
             int n = this.Length;
             bool echange;
@@ -227,7 +227,7 @@ namespace ProjetFinal
                 echange = false; 
                 for (int j = 0; j < n - i - 1; j++)
                 {
-                    // Compare et échange deux éléments si c'est nécessaire
+                    
                     if (string.Compare(this.mots[j], this.mots[j + 1]) > 0)
                     {
                         Echange(this.mots, j, j + 1);
@@ -235,7 +235,6 @@ namespace ProjetFinal
                     }
                 }
 
-                // Si on a pas échangé d'éléments on considère que le tri est fini
                 if (!echange)
                     break;
             }
@@ -264,7 +263,7 @@ namespace ProjetFinal
 
 
 
-        // Méthodes outils pour les algorithmes de tri
+
 
         /// <summary>
         /// Trie les sous-tableaux
@@ -275,24 +274,21 @@ namespace ProjetFinal
         /// <param name="droite">Fin du deuxième sous-tableau</param>
         private void Fusion(string[] tab, int gauche, int millieu, int droite)
         {
-            // Calcule la taille des deux tableaux à fusionner.
+ 
             int n1 = millieu - gauche + 1;
             int n2 = droite - millieu;
             
 
-            // crée des tableaux temporaires
+
             string[] tabGauche = new string[n1];
             string[] tabDroite = new string[n2];
 
-            // Copie les données vers les tableaux temporaires
             for (int i = 0; i < n1; i++)
                 tabGauche[i] = tab[gauche + i];
             for (int j = 0; j < n2; j++)
                 tabDroite[j] = tab[millieu + 1 + j];
 
-            // Fusion des tableaux temporaires
 
-            // Index initiaux des deux sous-tableaux
             int k = gauche;
             int indexI = 0;
             int indexJ = 0;
@@ -312,16 +308,14 @@ namespace ProjetFinal
                 k++;
             }
 
-            // Copie les éléments restants dans tabGauche
-            while (indexI < n1)
+             while (indexI < n1)
             {
                 tab[k] = tabGauche[indexI];
                 indexI++;
                 k++;
             }
 
-            // Copie les éléments restants dans tabDroite
-            while (indexJ < n2)
+             while (indexJ < n2)
             {
                 tab[k] = tabDroite[indexJ];
                 indexJ++;
@@ -338,12 +332,12 @@ namespace ProjetFinal
         /// <returns></returns>
         private int Partition(string[] tab, int debut, int fin)
         {
-            string pivot = tab[fin]; // Choisit l'élément le plus à droite comme pivot
+            string pivot = tab[fin];  
             int i = debut - 1;
 
             for (int j = debut; j < fin; j++)
             {
-                if (String.Compare(tab[j], pivot) <= 0)  // Si l'élément actuel vient avant ou est dans la même position que le pivot, on échange les deux
+                if (String.Compare(tab[j], pivot) <= 0)   
 
                 {
                     i++;
@@ -351,8 +345,7 @@ namespace ProjetFinal
                 }
             }
 
-            // Échanger tab[i + 1] et tab[fin] (ou le pivot)
-            Echange(tab, i + 1, fin);
+             Echange(tab, i + 1, fin);
             return i + 1;
         }
 
