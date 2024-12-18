@@ -317,26 +317,7 @@ namespace ProjetFinal
 
         static async Task Main(string[] args)
         {
-
-            // Vérifie que la librairie WordCloud soit installée.
-            bool lib = true;
-            try
-            {
-                var nuage = new WordCloud.WordCloud(800, 600);
-            }
-            catch (TypeLoadException)
-            {
-                Console.WriteLine("Veuillez installer la librarie WordCloud afin de pouvoir génerer le nuage de mots.");
-                lib = false;
-            }
-
-            if (!lib)
-            {
-                return;
-            }
-
-
-
+            
             // Setup
             var cts = new CancellationTokenSource();  // Crée un CancellationTokenSource
 
